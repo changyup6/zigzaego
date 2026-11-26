@@ -1,0 +1,252 @@
+/* 시안 home_v3.html .hello: 인사말 + 오른쪽 매출 예측 카드, 세로 가운데 맞춤 */
+.hello {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-card-x);
+  margin: var(--sp-block) 0 var(--sp-gap);
+}
+
+.hello h1 {
+  min-width: 0;
+  font-size: var(--fs-qty-xl);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+/* 시안 .home · .h-big: 큰 버튼 두 개 */
+.home {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-gutter);
+}
+
+.big {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-card-y);
+  min-height: var(--tile-min-h);
+  padding: var(--sp-block) var(--sp-gutter-desktop) var(--sp-gutter-desktop);
+  border-radius: var(--r-card);
+  color: inherit;
+  text-decoration: none;
+  transition: transform var(--dur-swap) var(--ease);
+}
+
+.big:active {
+  transform: scale(0.98);
+}
+
+.order {
+  color: var(--paper);
+  background:
+    radial-gradient(360px 280px at 90% 0%, var(--red-glow), transparent 70%),
+    linear-gradient(170deg, var(--dark-2), var(--dark-deep));
+}
+
+.recv {
+  background: var(--glass);
+  backdrop-filter: var(--blur-glass);
+}
+
+.big h2 {
+  width: fit-content;
+  font-size: var(--fs-big);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.big ul {
+  display: grid;
+  gap: var(--sp-row);
+}
+
+/* 품목 줄: 이름 · 수량 / 주문처 · 금액 */
+.big li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  column-gap: var(--sp-grid);
+  grid-template-rows: minmax(36px, auto) minmax(22px, auto);
+  min-height: 58px;
+}
+
+.nm {
+  width: fit-content;
+  font-size: var(--fs-headline);
+  font-weight: 500;
+}
+
+.q {
+  width: fit-content;
+  justify-self: end;
+  font-size: var(--n28);
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.q u {
+  margin-left: var(--sp-hair);
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  text-decoration: none;
+  color: var(--ink-3);
+}
+
+.order .q u {
+  color: var(--on-dark-3);
+}
+
+.src,
+.won {
+  font-size: var(--fs-label);
+  color: var(--on-dark-3);
+}
+
+.won {
+  text-align: right;
+}
+
+.recv .src {
+  color: var(--ink-3);
+}
+
+.nm,
+.src {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* 두 카드가 동일한 행 트랙을 공유해 긴 이름이 줄바꿈되어도 높이가 맞는다. */
+@media (min-width: 761px) {
+  .aligned {
+    grid-template-rows: auto repeat(var(--home-rows), minmax(58px, auto)) auto auto;
+    row-gap: var(--sp-row);
+  }
+  .aligned .big {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: 1 / span var(--home-span);
+    row-gap: var(--sp-row);
+  }
+  .aligned .big ul {
+    grid-template-rows: subgrid;
+    grid-row: 2 / span var(--home-rows);
+  }
+  .aligned .sum {
+    grid-row: var(--home-summary);
+    margin-top: 0;
+    align-self: end;
+  }
+  .aligned .go {
+    grid-row: var(--home-button);
+    margin-top: 0;
+  }
+}
+
+.big li.none {
+  display: block;
+  color: var(--ink-3);
+}
+
+.order li.none {
+  color: var(--on-dark-3);
+}
+
+.sum {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--sp-row);
+  border-top: 1px solid var(--line-on-dark);
+  font-size: var(--fs-body);
+  color: var(--on-dark-2);
+}
+
+.sum :global(.num) {
+  font-size: var(--fs-headline);
+  color: var(--paper);
+}
+
+.go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-control);
+  height: var(--tile-btn-h);
+  margin-top: auto;
+  border-radius: var(--r-pill);
+  background: var(--red);
+  color: var(--on-red);
+  font-size: var(--fs-headline);
+  font-weight: 600;
+  transition: background-color 120ms ease;
+}
+
+.sum + .go {
+  margin-top: 0;
+}
+
+.go :global(.num) {
+  margin-left: var(--sp-inline);
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.go svg {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.recv .go {
+  background: var(--dark);
+}
+
+@media (hover: hover) {
+  .order:hover .go {
+    background: var(--red-deep);
+  }
+
+  .recv:hover .go {
+    background: var(--ink);
+  }
+}
+
+.err {
+  color: var(--red-text);
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  .hello {
+    display: block;
+    margin: var(--sp-card-x) 0 0;
+  }
+
+  .hello h1 {
+    margin-bottom: var(--sp-row);
+    font-size: var(--fs-hero-m);
+  }
+
+  .home {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .big {
+    min-height: 0;
+    padding: var(--sp-card-x) var(--sp-card-y) var(--sp-card-y);
+  }
+}
+
+.sum small {
+  display: block;
+  font-size: var(--fs-caption);
+  font-weight: 400;
+}

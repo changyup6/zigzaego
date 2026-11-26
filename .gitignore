@@ -1,0 +1,42 @@
+# env — 절대 커밋 금지
+.env
+.env.local
+infra/k8s/overlays/*/secrets.env
+*.pem
+
+# build
+build/
+target/
+node_modules/
+.next/
+out/
+dist/
+backend/build/
+backend/.gradle/
+
+# ide
+.idea/
+.vscode/
+*.iml
+
+# os
+.DS_Store
+Thumbs.db
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# 로컬 도구 상태 — 개인 설정이라 커밋하지 않는다
+.claude/settings.local.json
+.impeccable/
+
+# MR 자동 리뷰 로컬 결과
+code-review/output/
+.notify-queue.jsonl
+
+# 로컬 git worktree (작업용 사본) — 커밋하지 않는다
+.claude/worktrees/

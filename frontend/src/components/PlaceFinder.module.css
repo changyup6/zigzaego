@@ -1,0 +1,136 @@
+/* 시안 .search · .cands · .cand · .linkin · .ask */
+.search {
+  display: flex;
+  gap: var(--sp-gap);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  height: var(--btn-h);
+  padding: 0 var(--sp-row);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background: var(--paper);
+  font-size: 16px;
+}
+
+.search input:focus,
+.linkin:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.search input::placeholder,
+.linkin::placeholder {
+  color: var(--ink-3);
+}
+
+.cands {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--sp-gap);
+}
+
+.cand {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px;
+  gap: var(--sp-grid);
+  align-items: center;
+  width: 100%;
+  padding: var(--sp-grid) var(--sp-row);
+  border: 0;
+  border-radius: var(--r-row);
+  background: var(--glass-row);
+  text-align: left;
+  transition: background-color 120ms ease;
+}
+
+.cand + .cand {
+  margin-top: var(--sp-inline);
+}
+
+.name {
+  display: block;
+  font-size: var(--fs-block);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.addr {
+  display: block;
+  margin-top: var(--sp-hair);
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.ic {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+/* 시안 .cand[aria-pressed]: 흰 바탕 + 잉크 테두리 */
+.cand[aria-pressed="true"] {
+  background: var(--paper);
+  box-shadow: inset 0 0 0 var(--mark-ring) var(--ink);
+}
+
+.cand[aria-pressed="true"] .ic {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cand:hover .name {
+    color: var(--red-text);
+  }
+}
+
+.empty {
+  padding: var(--sp-gap) 0 4px;
+  color: var(--ink-2);
+}
+
+.linkOpen {
+  margin: var(--sp-gap) calc(-1 * var(--sp-control)) 0;
+}
+
+.linkin {
+  width: 100%;
+  height: var(--control-h);
+  margin-top: var(--sp-gap);
+  padding: 0 var(--sp-grid);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background: var(--paper);
+}
+
+.ask {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-grid);
+}
+
+.ask b {
+  font-size: var(--fs-body);
+}
+
+.chips {
+  display: flex;
+  gap: var(--sp-gap);
+}
+
+.error {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--red-text);
+}

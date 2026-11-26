@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "description": "입력 재료마다 카테고리 하나. 입력 하나에 items 항목 하나, 입력 순서대로.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "입력 재료 이름을 그대로"
+          },
+          "category": {
+            "type": "string",
+            "description": "카테고리 목록에 있는 이름을 글자 그대로"
+          }
+        },
+        "required": ["name", "category"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["items"],
+  "additionalProperties": false
+}

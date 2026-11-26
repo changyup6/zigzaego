@@ -1,0 +1,225 @@
+/* 지그재고 디자인 토큰.
+   정본은 docs/design/DESIGN.md 와 docs/design/prototype/app_all.html 의 :root (DECISIONS #60).
+   값은 이 파일에서만 바꾼다. 컴포넌트에 hex 를 직접 쓰지 않는다. 라이트 하나. */
+
+:root {
+  /* ── 색: 미색 바닥 · 유리 카드 · 잉크 · 어두운 카드 · 빨강 ── */
+  --ground: #f3f1ec;
+  --glow: #f7d9d6;
+  --glass: rgba(255, 255, 255, 0.72);
+  --glass-row: rgba(255, 255, 255, 0.6);
+  --glass-orow: rgba(255, 255, 255, 0.75);
+  --paper: #ffffff;
+  --paper-2: rgba(29, 29, 27, 0.06);
+  --ink: #1d1d1b;
+  --ink-2: #4a4a46;
+  --ink-3: #6b6a64;
+  --ink-4: #9d9c96;
+  --ink-5: #b9b8b2;
+  --rule: rgba(29, 29, 27, 0.09);
+  --rule-soft: rgba(29, 29, 27, 0.05);
+  --tag-line: rgba(29, 29, 27, 0.28);
+  --dark: #262624;
+  --dark-2: #383835;
+  --dark-deep: #1c1c1a;
+  --red-glow: rgba(207, 34, 41, 0.6);
+  --on-dark-2: rgba(255, 255, 255, 0.65);
+  --on-dark-3: rgba(255, 255, 255, 0.5);
+  --glass-on-dark: rgba(255, 255, 255, 0.14);
+  --glass-on-dark-hover: rgba(255, 255, 255, 0.24);
+  --line-on-dark: rgba(255, 255, 255, 0.3);
+  --dot-line: rgba(29, 29, 27, 0.2);
+  --ok-dark: #2e5a43;
+  --ok-on-dark: #c9f0d8;
+  --red: #cf2229;
+  --red-deep: #b31b21;
+  --red-text: #cf2229;
+  --red-tint: #fdecec;
+  --red-on-dark: #ff8a8f;
+  /* 재료 탭 그림(냉장고 · 선반 · 창고) 선 · 손잡이: 빨강 50% (S15P31A308-277) */
+  --red-art: #e79094;
+  --on-red: #ffffff;
+  /* 접힌 빨간 매출 카드 위의 흰 글자 · 막대 · 선 (S15P31A308-265) */
+  --on-red-2: rgba(255, 255, 255, 0.95);
+  --on-red-3: rgba(255, 255, 255, 0.9);
+  --bar-on-red: rgba(255, 255, 255, 0.28);
+  --line-on-red: rgba(255, 255, 255, 0.2);
+  --glass-on-red: rgba(255, 255, 255, 0.14);
+  /* 펼친 매출 모달: 기존 중성 바탕 · 본문, 핵심 수치와 최대 막대만 빨강 (#101) */
+  --forecast-surface: var(--ground);
+  --forecast-ink: var(--ink);
+  --forecast-muted: var(--ink-2);
+  --forecast-accent: var(--red);
+  --forecast-bar: var(--ink-3);
+  --forecast-rule: var(--rule);
+  --forecast-panel: var(--paper);
+  --amber-text: #8a5e12;
+  --ok-text: #1a7f4b;
+  --ok-tint: #e3f3e8;
+  --step-done: #4e8466;
+  --scrim: rgba(25, 25, 23, 0.45);
+  --bar-bg: rgba(38, 38, 36, 0.92);
+  --nav-m-bg: rgba(255, 255, 255, 0.92);
+
+  /* ── 서체: 본문 Noto Sans KR, 숫자 Lexend ────────────── */
+  --font:
+    var(--font-noto), -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --numeral: var(--font-lexend), var(--font-noto), sans-serif;
+  /* 그림 글씨 (거래처 간판 · 냉장고 · 선반 · 창고 이름): 로고 손글씨와 비슷한 Jua */
+  --hand: var(--font-jua), var(--font-noto), sans-serif;
+
+  /* ── 숫자 네 단계 (시안 .n40 .n24 .n17 .n14) ─────────── */
+  --n40: 40px;
+  --n28: 28px;
+  --n18: 18px;
+  --n14: 16px;
+
+  /* ── 글자 크기 ──────────────────────────────────────── */
+  --fs-hero: 52px;
+  --fs-hero-m: 36px;
+  --fs-qty-xl: 64px;
+  /* 매출 예측 모달 숫자 (S15P31A308-265) */
+  --fs-forecast: 96px;
+  --fs-forecast-m: 80px;
+  --fs-big: 30px;
+  --fs-num-m: 24px;
+  --fs-num-s: 17px;
+  --fs-card-title: 18px;
+  --fs-headline: 22px;
+  --fs-sheet-title: 20px;
+  --fs-wordmark: 18px;
+  --fs-title: 16px;
+  --fs-body: 16px;
+  --fs-block: 16px;
+  --fs-label: 15px;
+  --fs-caption: 14px;
+
+  /* ── 모서리 ─────────────────────────────────────────── */
+  --r-card: 30px;
+  --r-control: 999px;
+  --r-input: 14px;
+  --r-row: 18px;
+  --r-panel: 14px;
+  --r-pill: 999px;
+  --r-circle: 50%;
+  --r-focus: 8px;
+  --r-cell: 8px;
+  /* 매출 예측 카드 · 막대 (S15P31A308-265) */
+  --r-widget: 24px;
+  --r-bubble: 22px;
+  --r-bar: 6px;
+  --r-sheet: 30px;
+
+  /* ── 간격 ───────────────────────────────────────────── */
+  --sp-hair: 2px;
+  --sp-tight: 4px;
+  --sp-inline: 6px;
+  --sp-gap: 8px;
+  --sp-control: 10px;
+  --sp-grid: 12px;
+  --sp-row: 14px;
+  --sp-chip-x: 14px;
+  --sp-gutter: 16px;
+  --sp-button-x: 18px;
+  --sp-card-x: 24px;
+  --sp-card-y: 22px;
+  --sp-sheet: 20px;
+  --sp-screen-top: 12px;
+  --sp-block: 32px;
+  --sp-gutter-desktop: 28px;
+
+  /* ── 셸 · 컨트롤 치수 ───────────────────────────────── */
+  --shell-h: 56px;
+  --tabs-h: 64px;
+  --act-h: 76px;
+  --main-w: 760px;
+  --main-w-desktop: 1360px;
+  --detail-w: 380px;
+  --control-h: 44px;
+  --sel-pad-r: calc(var(--sp-grid) + var(--ic-row) + var(--sp-gap));
+  --btn-h: 46px;
+  --btn-sm-h: 44px;
+  --btn-bar-h: 54px;
+  --chip-h: 44px;
+  --stepper-btn: 44px;
+  --ic-row: 16px;
+  --thumb-sm: 40px;
+  --ic-thumb: 18px;
+  --thumb-md: 56px;
+  --thumb-lg: 72px;
+  --ic-thumb-md: 26px;
+  --ic-thumb-lg: 32px;
+  --ic-rail: 20px;
+  --ic-tab: 22px;
+  --badge-h: 16px;
+  --info-h: 32px;
+  --ic-info: 20px;
+  --pop-max: 280px;
+  --bar-h: 8px;
+  --bar-h-lg: 12px;
+  --stepper-val-w: 84px;
+  --stepper-note-basis: 140px;
+  --auth-max-w: 440px;
+  --logo-auth: 112px;
+  --opt-h: 104px;
+  --mark-ring: 1.5px;
+  --sheet-max-w: 640px;
+  --modal-w: 780px;
+  --fs-modal-title: 26px;
+  --fs-hand: 22px;
+  --fs-hand-s: 16px;
+  /* 로고 그림체 (S15P31A308-270): 빨간 선 굵기 · 앞면 뒤로 보이는 깊이 */
+  --art-line: 5px;
+  --art-dx: 26px;
+  --art-dy: 18px;
+  --art-dx-m: 18px;
+  --art-dy-m: 13px;
+  --tile-h: 56px;
+  --fs-tile-num: 21px;
+  --art-line-thin: 3px;
+  --art-legs: 14px;
+  --art-roof: 62px;
+  /* 재료 카테고리 아이콘 (S15P31A308-279): 그림 보기 재료명 앞 · 표 묶음 머리 */
+  --ic-cat: 22px;
+  --cat-head-h: 24px;
+  --fridge-pad-r: 40px;
+  --cmp-label: 30px;
+  --shelf-foot: 28px;
+  --bay-shutter: 44px;
+  --find-w: 320px;
+  --pg-btn: 30px;
+  --pg-num: 34px;
+  --pn-btn: 44px;
+  --loc-h: 24px;
+  --tbl-min: 680px;
+  --shop-min: 220px;
+  --bars-h: 128px;
+  --bar-max: 36px;
+  --spin-w: 120px;
+  --day-dot: 30px;
+  --sheet-max-h: 92dvh;
+  --grab-w: 40px;
+  --grab-h: 4px;
+  --switch-w: 52px;
+  --switch-h: 32px;
+  --switch-knob: 26px;
+  --ic-check: 14px;
+  --ic-check-box: 22px;
+  --row-min-h: 64px;
+  --tile-min-h: 380px;
+  --tile-btn-h: 68px;
+
+  /* ── 움직임 ─────────────────────────────────────────── */
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-swap: 160ms;
+  --dur-sheet: 240ms;
+
+  /* ── 그림자: 토스트 · 폰 하단 탭 막대 · 액션 바뿐 ─────────── */
+  --shadow-toast: 0 8px 24px -8px rgba(0, 0, 0, 0.35);
+  --shadow-nav-m: 0 10px 30px -14px rgba(0, 0, 0, 0.3);
+  --shadow-bar: 0 16px 40px -16px rgba(0, 0, 0, 0.45);
+  --blur-glass: blur(16px);
+
+  color-scheme: light;
+}

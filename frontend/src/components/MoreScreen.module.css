@@ -1,0 +1,49 @@
+/* 시안 app_all.html .more · .more-side */
+.more {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--sp-gutter);
+}
+
+.side {
+  display: grid;
+  gap: var(--sp-gutter);
+}
+
+.end {
+  justify-self: start;
+}
+
+/* 가게 정보: 켬/끔 줄(Switch .line)과 같은 줄 모양, 수정 수단 없음 */
+.info > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-grid);
+  padding: var(--sp-grid) 0;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: var(--fs-body);
+}
+
+.info > div:last-child {
+  border-bottom: 0;
+}
+
+.info dt {
+  flex: none;
+  color: var(--ink-3);
+}
+
+.info dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  .more {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

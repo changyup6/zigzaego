@@ -1,0 +1,12 @@
+{
+  "menus": [
+    {"name": "치킨 알리오 파스타볼", "description": null, "price": 9900},
+    {"name": "불고기 들기름 파스타볼", "description": null, "price": 10900},
+    {"name": "불고기 토마토 라구 파스타볼", "description": null, "price": 11900},
+    {"name": "치킨 까르보나라 파스타볼", "description": null, "price": 11900},
+    {"name": "새우 매콤크림 파스타볼", "description": null, "price": 12900},
+    {"name": "위글리 세트", "description": "파스타볼 + 사이드 + 음료", "price": 13400},
+    {"name": "브레드 스틱 2개", "description": null, "price": 2800},
+    {"name": "더블 불고기 파스타볼", "description": null, "price": 13900}
+  ]
+}

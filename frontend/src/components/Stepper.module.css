@@ -1,0 +1,62 @@
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-control);
+  flex-wrap: wrap;
+}
+
+.stepper button {
+  display: grid;
+  place-items: center;
+  width: var(--stepper-btn);
+  height: var(--stepper-btn);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-circle);
+  background: var(--paper-2);
+  transition:
+    transform 160ms var(--ease),
+    background-color 120ms ease;
+}
+
+.stepper button:active {
+  transform: scale(0.95);
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+}
+
+.icon {
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.val {
+  min-width: var(--stepper-val-w);
+  text-align: center;
+}
+
+.note {
+  flex: 1 1 var(--stepper-note-basis);
+  min-width: 0;
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.full {
+  flex-basis: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .stepper button:hover:not(:disabled) {
+    background: var(--rule);
+  }
+}

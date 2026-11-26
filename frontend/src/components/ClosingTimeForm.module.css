@@ -1,0 +1,43 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-card-y);
+}
+
+/* Field 라벨과 같은 모양 */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-inline);
+}
+
+.group > span {
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--sp-inline);
+}
+
+/* 요일 칩: 한 글자라 좌우 여백 없이 칸을 채우고, 누르는 칸 44px */
+.days button {
+  height: var(--control-h);
+  padding: 0;
+}
+
+.error {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--red-text);
+}
+
+/* 폰은 7개를 한 줄에 줄이지 않고 44px 누르는 폭을 확보한다. */
+@media (max-width: 760px) {
+  .days {
+    grid-template-columns: repeat(4, minmax(44px, 1fr));
+  }
+}

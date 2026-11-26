@@ -1,0 +1,199 @@
+/* 시안 app_all.html 발주 이력 (.r-inc · .inc-row · .tx · .mpick) */
+.ic {
+  width: var(--fs-body);
+  height: var(--fs-body);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.empty {
+  padding: var(--sp-card-x) 0;
+  font-size: var(--fs-block);
+  font-weight: 600;
+  text-align: center;
+  color: var(--ink-3);
+}
+
+/* 오늘 입고 예정: 어두운 카드 */
+.inc {
+  padding: var(--sp-card-y) var(--sp-card-x);
+  border-radius: var(--r-card);
+  background: var(--dark);
+  color: var(--paper);
+}
+
+.inc .empty {
+  color: var(--on-dark-3);
+}
+
+.incH {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 34px;
+}
+
+.incH h2 {
+  font-size: var(--fs-card-title);
+  font-weight: 400;
+}
+
+.incH :global(.num) {
+  font-size: var(--n28);
+  font-weight: 300;
+}
+
+.incRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--sp-row);
+  padding: var(--sp-grid) var(--sp-tight);
+  border-top: 1px solid var(--glass-on-dark);
+}
+
+.incRow:first-of-type {
+  margin-top: var(--sp-gap);
+  border-top: 0;
+}
+
+.incRow b {
+  display: block;
+  font-size: var(--fs-body);
+  font-weight: 500;
+}
+
+.incRow small {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-gap);
+  font-size: var(--fs-caption);
+  color: var(--on-dark-3);
+}
+
+.q {
+  font-size: var(--n28);
+  font-weight: 300;
+}
+
+.q u {
+  margin-left: var(--sp-hair);
+  font-size: var(--fs-caption);
+  text-decoration: none;
+  color: var(--on-dark-3);
+}
+
+/* 지난 발주 */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-control);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-tight);
+}
+
+.nav button {
+  display: grid;
+  place-items: center;
+  width: var(--control-h);
+  height: var(--control-h);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+}
+
+.nav button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.nav .ym {
+  display: inline-flex;
+  gap: var(--sp-tight);
+  width: auto;
+  min-width: 140px;
+  padding: 0 var(--sp-control) 0 var(--sp-row);
+  border: 0;
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+.ym .ic {
+  color: var(--ink-3);
+  transition: rotate var(--dur-swap) var(--ease);
+}
+
+.ym[aria-expanded="true"] .ic {
+  rotate: 180deg;
+}
+
+.sum {
+  margin-left: auto;
+  font-size: var(--fs-label);
+  white-space: nowrap;
+  color: var(--ink-3);
+}
+
+.sum b {
+  margin-left: var(--sp-tight);
+  font-size: var(--fs-num-s);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.date {
+  padding: var(--sp-card-x) var(--sp-tight) var(--sp-inline);
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.tx {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-gutter);
+  padding: var(--sp-row) var(--sp-tight);
+}
+
+.tx + .tx {
+  border-top: 1px solid var(--rule);
+}
+
+.tx b {
+  display: block;
+  font-size: var(--fs-num-s);
+  font-weight: 500;
+}
+
+.tx small {
+  display: block;
+  margin-top: var(--sp-tight);
+  font-size: var(--fs-label);
+  color: var(--ink-3);
+}
+
+.r {
+  flex: none;
+  text-align: right;
+}
+
+.tx small.redT {
+  font-weight: 600;
+  color: var(--red-text);
+}
+
+.off b {
+  color: var(--ink-3);
+}

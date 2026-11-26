@@ -1,0 +1,609 @@
+/* 접힌 예측 카드는 빨강, 펼친 모달은 중성 바탕 (DECISIONS #101). */
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: var(--sp-sheet) var(--sp-card-y) var(--sp-button-x);
+  border: 0;
+  border-radius: var(--r-card);
+  background: var(--red);
+  color: var(--on-red);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms var(--ease);
+}
+
+.card:active {
+  transform: scale(0.97);
+}
+
+.card.gone {
+  visibility: hidden;
+}
+
+.empty {
+  min-height: 210px;
+  cursor: default;
+}
+
+.lb {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-block);
+  color: var(--on-red-2);
+}
+
+.lb svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* 홈에서 넘어올 때 글자 폭만큼만 이어지게 */
+.v,
+.why {
+  display: block;
+  width: fit-content;
+}
+
+.v {
+  color: var(--on-red);
+  margin: var(--sp-row) 0 var(--sp-tight);
+  font-size: var(--fs-qty-xl);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.v small {
+  margin-left: var(--sp-hair);
+  font-family: var(--font);
+  font-size: var(--fs-headline);
+  color: var(--on-red-2);
+}
+
+.why {
+  font-size: var(--fs-body);
+  font-weight: 500;
+}
+
+.wk {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--sp-inline);
+  align-items: end;
+  height: 88px;
+  margin-top: var(--sp-gutter);
+}
+
+.wk > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-tight);
+  height: 100%;
+  font-size: var(--fs-caption);
+  color: var(--on-red-3);
+}
+
+.wk i {
+  display: block;
+  width: 100%;
+  border-radius: var(--r-bar);
+  background: var(--bar-on-red);
+}
+
+.wk em {
+  font-style: normal;
+}
+
+.wk .hot {
+  color: var(--on-red);
+  font-weight: 600;
+}
+
+.wk .hot i {
+  background: var(--on-red);
+}
+
+/* 홈 인사말 옆 작은 카드 (시안 home_v3.html .ev): 왼쪽 글자, 오른쪽 막대 */
+.mini {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: var(--sp-gutter);
+  width: 360px;
+  padding: var(--sp-row) var(--sp-sheet);
+  border-radius: var(--r-widget);
+}
+
+.mini.empty {
+  min-height: 94px;
+}
+
+.mini .lb {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  font-size: var(--fs-label);
+}
+
+.mini .v {
+  grid-column: 1;
+  grid-row: 2;
+  margin: var(--sp-inline) 0 0;
+  font-size: var(--n40);
+}
+
+.mini .v small {
+  font-size: var(--fs-title);
+}
+
+.mini .wk {
+  display: flex;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  justify-content: flex-end;
+  align-self: end;
+  gap: var(--sp-tight);
+  height: 44px;
+  margin: 0;
+}
+
+.mini .wk > span {
+  width: 14px;
+}
+
+.mini .wk i {
+  border-radius: var(--r-bar);
+}
+
+/* 모달: 카드가 그대로 커진다. 카드의 오른쪽 위 모서리에 붙어서 왼쪽 · 아래로 넓어진다.
+   오른쪽 칸은 카드와 같은 폭이라 숫자 · 이유 · 막대가 제자리에서 커지고, 왼쪽에 분석이 새로 열린다 */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--scrim);
+  opacity: 0;
+  pointer-events: none;
+  touch-action: none;
+  transition: opacity 320ms ease;
+}
+
+.scrim:has(+ .fx.on):not(:has(+ .fx.closing)) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fx {
+  position: fixed;
+  inset: 0;
+  z-index: 41;
+  visibility: hidden;
+  background: var(--forecast-surface);
+  color: var(--forecast-ink);
+  pointer-events: none;
+}
+
+.fx.on {
+  visibility: visible;
+}
+
+.box {
+  position: absolute;
+  overflow: auto;
+  overscroll-behavior: contain;
+  pointer-events: auto;
+  scrollbar-width: none;
+}
+
+.box::-webkit-scrollbar {
+  display: none;
+}
+
+.in {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--cw, 336px) minmax(0, 1fr);
+  gap: 0 var(--sp-block);
+  padding: var(--sp-sheet) var(--sp-card-y) var(--sp-card-y);
+}
+
+.r {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.l {
+  display: flex;
+  flex-direction: column;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 21px;
+  font-size: var(--fs-block);
+  color: var(--forecast-muted);
+}
+
+/* 고정 제목 줄도 모달과 같은 배경색으로 함께 전환한다. */
+.r .top {
+  background: var(--forecast-surface);
+}
+
+.x {
+  position: absolute;
+  top: 12px;
+  right: 13px;
+  display: grid;
+  place-items: center;
+  width: var(--btn-sm-h);
+  height: var(--btn-sm-h);
+  border: 0;
+  border-radius: 50%;
+  background: var(--forecast-panel);
+  cursor: pointer;
+  transition: transform 140ms var(--ease);
+}
+
+.x:active {
+  transform: scale(0.92);
+}
+
+.x svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--forecast-ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.fx h2 {
+  color: var(--forecast-accent);
+  margin: var(--sp-row) 0 var(--sp-inline);
+  font-size: var(--fs-forecast);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.fx h2 small {
+  margin-left: var(--sp-tight);
+  font-family: var(--font);
+  font-size: var(--fs-big);
+  color: var(--forecast-muted);
+}
+
+.sub {
+  display: inline-block;
+  font-size: var(--fs-sheet-title);
+  font-weight: 500;
+}
+
+.fwk {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--sp-gap);
+  align-items: end;
+  height: 236px;
+  margin-top: var(--sp-card-y);
+}
+
+.fwk > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-tight);
+  height: 100%;
+  font-size: var(--fs-label);
+  color: var(--forecast-muted);
+}
+
+.fwk b {
+  font-family: var(--numeral);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  color: var(--forecast-muted);
+}
+
+.fwk i {
+  display: block;
+  width: 100%;
+  border-radius: var(--r-bar);
+  background: var(--forecast-bar);
+}
+
+.fwk em {
+  font-style: normal;
+}
+
+.fwk .hot {
+  color: var(--forecast-ink);
+  font-weight: 600;
+}
+
+.fwk .hot i {
+  background: var(--forecast-accent);
+}
+
+.fx h2,
+.sub,
+.fwk i {
+  transform-origin: 0 0;
+}
+
+.date {
+  font-size: var(--fs-block);
+}
+
+/* 카드에 없던 것만 흐림 → 선명 */
+.fade {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(6px);
+  transition:
+    opacity 280ms var(--ease),
+    filter 280ms var(--ease),
+    transform 280ms var(--ease);
+}
+
+.fwk .fade {
+  transform: none;
+}
+
+.ready .fade {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+.ready .l .fade {
+  transition-delay: 60ms;
+}
+
+.closing .fade {
+  transition-duration: 110ms;
+  transition-delay: 0ms !important;
+}
+
+.fac {
+  margin-top: var(--sp-button-x);
+  border-top: 1px solid var(--forecast-rule);
+}
+
+.fac > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--sp-inline) var(--sp-gutter);
+  align-items: center;
+  padding: var(--sp-grid) 0;
+  border-bottom: 1px solid var(--forecast-rule);
+}
+
+.n {
+  font-size: var(--fs-title);
+}
+
+.n small {
+  margin-left: var(--sp-gap);
+  font-size: var(--fs-label);
+  color: var(--forecast-muted);
+}
+
+.fv {
+  font-size: var(--fs-headline);
+  font-weight: 400;
+}
+
+.bar {
+  grid-column: 1 / -1;
+  height: 5px;
+  overflow: hidden;
+  border-radius: var(--r-pill);
+  background: var(--forecast-rule);
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--forecast-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 600ms var(--ease);
+}
+
+.ready .bar i {
+  transform: scaleX(1);
+}
+
+/* 분석 문장: 다 쳤을 때 높이를 미리 잡아 두어 치는 동안 아래가 밀리지 않는다 */
+.say {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  margin-top: var(--sp-row);
+  padding: var(--sp-button-x) var(--sp-sheet);
+  border-radius: var(--r-bubble);
+  background: var(--forecast-panel);
+  font-size: var(--fs-title);
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.say > * {
+  grid-area: 1 / 1;
+}
+
+.ghost {
+  visibility: hidden;
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: var(--sp-hair);
+  vertical-align: -3px;
+  background: var(--forecast-accent);
+  animation: blink 900ms steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.note {
+  margin-top: var(--sp-grid);
+  font-size: var(--fs-caption);
+  text-align: right;
+  color: var(--forecast-muted);
+}
+
+/* 폰: 한 칸. 숫자 → 분석 → 막대 → 기여 → 안내 순서, 제목 줄과 닫기는 스크롤해도 맨 위에 */
+@media (max-width: 760px) {
+  .mini {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--sp-inline) var(--sp-row);
+    width: 100%;
+    padding: var(--sp-row) var(--sp-button-x);
+    border-radius: var(--r-bubble);
+  }
+
+  .mini .v {
+    margin: 0;
+    font-size: var(--n28);
+  }
+
+  .mini .wk {
+    grid-row: 2;
+    height: 30px;
+    gap: var(--sp-tight);
+  }
+
+  .mini .wk > span {
+    width: 10px;
+  }
+
+  .mini .wk i {
+    border-radius: var(--r-bar);
+  }
+
+  .in {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .r,
+  .l,
+  .l .top {
+    display: contents;
+  }
+
+  .date {
+    display: none;
+  }
+
+  .r .top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    grid-row: 1;
+    grid-column: 1;
+    order: 1;
+    height: auto;
+    margin: calc(-1 * var(--sp-sheet)) calc(-1 * var(--sp-card-y)) 0;
+    padding: var(--sp-sheet) var(--sp-card-y) var(--sp-row);
+    background: var(--forecast-surface);
+  }
+
+  .x {
+    position: sticky;
+    top: 12px;
+    z-index: 3;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: end;
+    align-self: start;
+    margin: calc(-1 * var(--sp-gap)) calc(-1 * var(--sp-gap)) 0 0;
+  }
+
+  .fx h2 {
+    order: 2;
+    font-size: var(--fs-forecast-m);
+  }
+
+  .sub {
+    order: 3;
+  }
+
+  .say {
+    order: 4;
+    margin-top: var(--sp-button-x);
+    padding: var(--sp-gutter) var(--sp-button-x);
+  }
+
+  .fwk {
+    order: 5;
+    gap: var(--sp-inline);
+  }
+
+  .fac {
+    order: 6;
+  }
+
+  .note {
+    order: 7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .fade,
+  .bar i,
+  .scrim {
+    transition-duration: 0ms;
+  }
+}
+
+/* 데이터 부재/통신 실패는 진행 중인 skeleton과 구분한다. */
+.notice {
+  display: grid;
+  justify-items: start;
+  gap: var(--sp-grid);
+  padding: var(--sp-sheet);
+  border-radius: var(--r-card);
+  background: var(--forecast-surface);
+  color: var(--forecast-ink);
+}
+.notice[data-mini] {
+  width: 360px;
+  max-width: 100%;
+}
+.indexNote {
+  margin-top: var(--sp-gutter);
+  font-size: var(--fs-caption);
+  color: var(--forecast-muted);
+}
+@media (max-width: 760px) {
+  .notice[data-mini] {
+    width: 100%;
+  }
+  .indexNote {
+    order: 5;
+  }
+}

@@ -1,0 +1,34 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-hair);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ic {
+  width: var(--ic-check);
+  height: var(--ic-check);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.red {
+  color: var(--red-text);
+}
+
+.amber {
+  color: var(--amber-text);
+}
+
+.ok {
+  color: var(--ok-text);
+}
+
+.muted {
+  color: var(--ink-3);
+}

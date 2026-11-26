@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "description": "입력 재료마다 종류 · 기준 단위 · 보관 방식 · 1인분 초기값 · 확신도 · 유통기한. 입력 하나에 items 항목 하나.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "입력 재료 이름을 그대로"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["BOM", "ONE_TO_ONE"],
+            "description": "BOM 섞어 만드는 메뉴의 재료, ONE_TO_ONE 사 온 그대로 하나씩 파는 품목"
+          },
+          "unit": {
+            "type": "string",
+            "enum": ["G", "ML", "EA"],
+            "description": "1인분을 무엇으로 세는가. 개 · 마리 EA, 액체 ML, 나머지 G"
+          },
+          "storageType": {
+            "type": "string",
+            "enum": ["FROZEN", "AMBIENT", "CHILLED", "FRESH"]
+          },
+          "perServing": {
+            "type": "number",
+            "description": "1인분 초기값, unit 기준. 양수"
+          },
+          "confidence": {
+            "type": "number",
+            "description": "perServing 을 얼마나 믿나. 0 ~ 1"
+          },
+          "shelfLifeDays": {
+            "type": "integer",
+            "description": "개봉 전 업소 보관 기준 유통기한(일). 2 이상 정수, 보수적으로"
+          }
+        },
+        "required": ["name", "kind", "unit", "storageType", "perServing", "confidence", "shelfLifeDays"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["items"],
+  "additionalProperties": false
+}

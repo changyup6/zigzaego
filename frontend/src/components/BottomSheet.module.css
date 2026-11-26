@@ -1,0 +1,140 @@
+.sheet {
+  position: fixed;
+  inset: auto 0 0 0;
+  width: 100%;
+  max-width: var(--sheet-max-w);
+  max-height: var(--sheet-max-h);
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+  background: var(--ground);
+  color: var(--ink);
+  overflow: auto;
+}
+
+.sheet::backdrop {
+  background: var(--scrim);
+}
+
+.in {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sheet);
+  padding: var(--sp-grid) var(--sp-sheet) calc(var(--sp-sheet) + env(safe-area-inset-bottom, 0px));
+}
+
+.grab {
+  width: var(--grab-w);
+  height: var(--grab-h);
+  margin: 0 auto;
+  border-radius: var(--r-pill);
+  background: var(--rule);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-grid);
+  padding-bottom: var(--sp-gap);
+}
+
+.head h2 {
+  font-size: var(--fs-sheet-title);
+  font-weight: 600;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: var(--control-h);
+  height: var(--control-h);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+}
+
+.close svg {
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sheet {
+    transition:
+      transform var(--dur-sheet) var(--ease-drawer),
+      opacity var(--dur-sheet) var(--ease-drawer),
+      overlay var(--dur-sheet) allow-discrete,
+      display var(--dur-sheet) allow-discrete;
+  }
+
+  .sheet::backdrop {
+    transition:
+      background-color var(--dur-sheet) ease,
+      overlay var(--dur-sheet) allow-discrete,
+      display var(--dur-sheet) allow-discrete;
+  }
+
+  .sheet:not([open]) {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  @starting-style {
+    .sheet[open] {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    .sheet[open]::backdrop {
+      background-color: transparent;
+    }
+  }
+}
+
+/* 데스크톱: 아래에 붙은 시트 대신 가운데 모달 (DECISIONS #86). 폰은 바텀시트 그대로 */
+@media (min-width: 761px) {
+  .sheet {
+    inset: 0;
+    width: min(var(--sheet-max-w), calc(100% - 2 * var(--sp-card-x)));
+    max-height: calc(100dvh - 2 * var(--sp-card-x));
+    margin: auto;
+    border-radius: var(--r-card);
+  }
+
+  .in {
+    padding: var(--sp-card-y) var(--sp-card-x) var(--sp-card-x);
+  }
+
+  .grab {
+    display: none;
+  }
+
+  .head h2 {
+    font-size: var(--fs-modal-title);
+    letter-spacing: -0.03em;
+  }
+
+  .close {
+    border-radius: var(--r-circle);
+    background: var(--paper);
+  }
+}
+
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .sheet:not([open]) {
+    transform: scale(0.96);
+  }
+
+  @starting-style {
+    .sheet[open] {
+      transform: scale(0.96);
+    }
+  }
+}

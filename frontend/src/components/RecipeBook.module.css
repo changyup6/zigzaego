@@ -1,0 +1,301 @@
+/* 시안 app_all.html 레시피 (.rcp · .menu-l · .r-detail · .ing) */
+.rcp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  align-items: start;
+  gap: var(--sp-gutter);
+}
+
+.empty {
+  padding: var(--sp-card-x) 0;
+  font-size: var(--fs-block);
+  font-weight: 600;
+  text-align: center;
+  color: var(--ink-3);
+}
+
+.menuL {
+  display: grid;
+  gap: var(--sp-inline);
+  margin-top: var(--sp-control);
+}
+
+.menuL + .menuL {
+  margin-top: var(--sp-gutter);
+}
+
+.groupHead {
+  font-size: var(--fs-block);
+  font-weight: 600;
+  color: var(--red-text);
+}
+
+.groupHead.confirmed {
+  color: var(--ink);
+}
+
+/* 시안 .irow: 반투명 흰 행, 고른 메뉴는 흰 바탕 + 잉크 테두리 */
+.menu {
+  display: grid;
+  grid-template-columns: var(--thumb-sm) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--sp-grid);
+  width: 100%;
+  padding: var(--sp-gap) var(--sp-control) var(--sp-gap) var(--sp-gap);
+  border: 0;
+  border-radius: var(--r-row);
+  background: var(--glass-row);
+  text-align: left;
+  color: var(--ink);
+  transition: background-color var(--dur-swap) var(--ease);
+}
+
+.menu[aria-current] {
+  background: var(--paper);
+  box-shadow: inset 0 0 0 var(--mark-ring) var(--ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu:hover {
+    background: var(--paper);
+  }
+}
+
+.menu > svg {
+  width: var(--ic-row);
+  height: var(--ic-row);
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.menuName {
+  display: block;
+  font-size: var(--fs-block);
+  font-weight: 500;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  gap: var(--sp-gap);
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+/* 시안 .th: 작은 타일, 고른 메뉴는 빨강 */
+.thumb {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--thumb-sm);
+  height: var(--thumb-sm);
+  border-radius: var(--r-panel);
+  background: var(--paper-2);
+  color: var(--ink-2);
+  overflow: hidden;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.menu[aria-current] .thumb {
+  background: var(--red);
+  color: var(--on-red);
+}
+
+.thumb svg {
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.detail {
+  padding: var(--sp-gap);
+  border-radius: var(--r-card);
+  background: var(--glass);
+  backdrop-filter: var(--blur-glass);
+}
+
+.back {
+  display: none;
+}
+
+.back svg,
+.add svg,
+.del svg {
+  width: var(--ic-row);
+  height: var(--ic-row);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 시안 .r-detail .d-top: 어두운 머리 */
+.top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-gutter);
+  padding: var(--sp-card-y);
+  border-radius: var(--r-card);
+  color: var(--paper);
+  background:
+    radial-gradient(360px 300px at 85% 10%, var(--red-glow), transparent 70%),
+    linear-gradient(170deg, var(--dark-2), var(--dark-deep));
+}
+
+.thumbLg {
+  width: var(--thumb-lg);
+  height: var(--thumb-lg);
+  border-radius: var(--r-row);
+  background: var(--glass-on-dark);
+  color: var(--paper);
+}
+
+.thumbLg svg {
+  width: var(--fs-big);
+  height: var(--fs-big);
+}
+
+.top h2 {
+  font-size: var(--fs-headline);
+  font-weight: 600;
+}
+
+.top p {
+  font-size: var(--fs-body);
+  color: var(--on-dark-2);
+}
+
+.cnt {
+  margin-left: auto;
+  text-align: right;
+}
+
+.cnt b {
+  display: block;
+  font-size: var(--n40);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.cnt small {
+  font-size: var(--fs-caption);
+  color: var(--on-dark-3);
+}
+
+.rows {
+  padding: var(--sp-gap) var(--sp-row) var(--sp-inline);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--sp-control);
+  padding: var(--sp-control) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.row:first-child {
+  border-top: 0;
+}
+
+.name {
+  font-size: var(--fs-body);
+  font-weight: 500;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-inline);
+  font-size: var(--fs-label);
+  color: var(--ink-3);
+}
+
+.qty input {
+  width: var(--stepper-val-w);
+  height: var(--control-h);
+  padding: 0 var(--sp-grid);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background: var(--paper);
+  font-size: var(--fs-num-s);
+  text-align: right;
+}
+
+.qty input:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+/* 데이터가 도착해 칸이 그려진 뒤 흔든다. 메뉴 클릭 여부와 무관하다. */
+.rcp .nudge {
+  animation: nudge 400ms ease-in-out 500ms;
+}
+
+@keyframes nudge {
+  20% {
+    transform: translateX(calc(-1 * var(--sp-inline)));
+  }
+  40% {
+    transform: translateX(var(--sp-inline));
+  }
+  60% {
+    transform: translateX(calc(-1 * var(--sp-hair)));
+  }
+  80% {
+    transform: translateX(var(--sp-hair));
+  }
+}
+
+.del {
+  width: var(--btn-sm-h);
+  height: var(--btn-sm-h);
+  padding: 0;
+  border-radius: 50%;
+  color: var(--ink-3);
+}
+
+.add {
+  padding: var(--sp-inline) var(--sp-row) var(--sp-row);
+}
+
+@media (max-width: 760px) {
+  .rcp {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rcp .detail,
+  .rcp[data-open] .menus {
+    display: none;
+  }
+
+  .rcp[data-open] .detail {
+    display: block;
+  }
+
+  .back {
+    display: inline-flex;
+    margin: var(--sp-gap) var(--sp-gap) var(--sp-control);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rcp .nudge {
+    animation: none;
+  }
+}

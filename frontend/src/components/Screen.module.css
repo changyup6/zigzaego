@@ -1,0 +1,114 @@
+/* 시안 .hero + .g: 52px 얇은 화면 제목, 카드 사이 16px */
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-gutter);
+}
+
+/* 시안 .hero: 제목 + (있으면) 오른쪽 도구 */
+.head {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  margin: 32px 0 12px;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-hero);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.fit {
+  flex: none;
+}
+
+.aside {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: var(--sp-grid) var(--sp-gutter);
+  align-items: center;
+  min-width: 0;
+}
+
+.title :global(.num) {
+  color: var(--red);
+  font-weight: 400;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-h);
+  padding-inline: var(--sp-button-x);
+  border-radius: var(--r-control);
+  background: var(--red);
+  color: var(--on-red);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 160ms var(--ease),
+    background-color 120ms ease;
+}
+
+.link:active {
+  transform: scale(0.97);
+  background: var(--red-deep);
+}
+
+.ghost {
+  background: var(--paper-2);
+  color: var(--ink-2);
+}
+
+.ghost:active {
+  background: var(--rule);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    background: var(--red-deep);
+  }
+
+  .ghost:hover {
+    background: var(--rule);
+  }
+}
+
+.submit {
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  .head {
+    flex-wrap: wrap;
+    row-gap: var(--sp-grid);
+    margin: 20px 0 6px;
+  }
+
+  /* 폰: 전환은 제목 옆, 검색은 다음 줄 전체 */
+  .aside {
+    display: contents;
+  }
+
+  .title {
+    font-size: var(--fs-hero-m);
+  }
+}
+
+@media (min-width: 761px) {
+  .screen[data-fit-viewport] {
+    height: 100%;
+    min-height: 0;
+    gap: var(--sp-grid);
+  }
+  .screen[data-fit-viewport] .head {
+    flex: none;
+    margin: var(--sp-gutter) 0 var(--sp-tight);
+  }
+}

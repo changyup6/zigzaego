@@ -1,0 +1,85 @@
+{
+  "menus": [
+    {
+      "menu": "치킨 알리오 파스타볼",
+      "kind": "MAIN",
+      "duplicateOf": null,
+      "components": [
+        {"name": "파스타면", "role": "BASE", "mult": 1},
+        {"name": "알리오 올리오 소스", "role": "SAUCE", "mult": 1},
+        {"name": "닭고기", "role": "PROTEIN", "mult": 1},
+        {"name": "파르메산 치즈", "role": "TOPPING", "mult": 1}
+      ]
+    },
+    {
+      "menu": "불고기 들기름 파스타볼",
+      "kind": "MAIN",
+      "duplicateOf": null,
+      "components": [
+        {"name": "파스타면", "role": "BASE", "mult": 1},
+        {"name": "들기름 소스", "role": "SAUCE", "mult": 1},
+        {"name": "불고기", "role": "PROTEIN", "mult": 1}
+      ]
+    },
+    {
+      "menu": "불고기 토마토 라구 파스타볼",
+      "kind": "MAIN",
+      "duplicateOf": null,
+      "components": [
+        {"name": "파스타면", "role": "BASE", "mult": 1},
+        {"name": "토마토 라구 소스", "role": "SAUCE", "mult": 1},
+        {"name": "불고기", "role": "PROTEIN", "mult": 1},
+        {"name": "파르메산 치즈", "role": "TOPPING", "mult": 1}
+      ]
+    },
+    {
+      "menu": "치킨 까르보나라 파스타볼",
+      "kind": "MAIN",
+      "duplicateOf": null,
+      "components": [
+        {"name": "파스타면", "role": "BASE", "mult": 1},
+        {"name": "까르보나라 소스", "role": "SAUCE", "mult": 1},
+        {"name": "닭고기", "role": "PROTEIN", "mult": 1},
+        {"name": "베이컨", "role": "TOPPING", "mult": 1},
+        {"name": "파르메산 치즈", "role": "TOPPING", "mult": 1}
+      ]
+    },
+    {
+      "menu": "새우 매콤크림 파스타볼",
+      "kind": "MAIN",
+      "duplicateOf": null,
+      "components": [
+        {"name": "파스타면", "role": "BASE", "mult": 1},
+        {"name": "매콤 크림 소스", "role": "SAUCE", "mult": 1},
+        {"name": "새우", "role": "PROTEIN", "mult": 1}
+      ]
+    },
+    {
+      "menu": "위글리 세트",
+      "kind": "SET",
+      "duplicateOf": null,
+      "components": [
+        {"name": "파스타면", "role": "BASE", "mult": 1},
+        {"name": "브레드 스틱", "role": "SIDE", "mult": 2},
+        {"name": "음료", "role": "DRINK", "mult": 1}
+      ]
+    },
+    {
+      "menu": "브레드 스틱 2개",
+      "kind": "MAIN",
+      "duplicateOf": null,
+      "components": [
+        {"name": "브레드 스틱", "role": "SIDE", "mult": 2}
+      ]
+    },
+    {
+      "menu": "더블 불고기 파스타볼",
+      "kind": "MAIN",
+      "duplicateOf": null,
+      "components": [
+        {"name": "파스타면", "role": "BASE", "mult": 1},
+        {"name": "불고기", "role": "PROTEIN", "mult": 2}
+      ]
+    }
+  ]
+}

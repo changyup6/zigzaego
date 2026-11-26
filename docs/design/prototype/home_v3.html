@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지그재고 홈 v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F1EC;--glow:#F7D9D6;--glass:rgba(255,255,255,.72);--paper:#fff;
+  --ink:#1D1D1B;--ink-2:#4A4A46;--ink-3:#85847E;--rule:rgba(29,29,27,.09);
+  --dark:#262624;--dark-2:#383835;--red:#CF2229;--red-on-dark:#FF8A8F;
+  --on-dark-2:rgba(255,255,255,.72);--on-dark-3:rgba(255,255,255,.5);
+  --font:"Noto Sans KR",system-ui,sans-serif;--num:"Lexend","Noto Sans KR",sans-serif;
+  --numeral:var(--num);--scrim:rgba(25,25,23,.45);--ease-out:cubic-bezier(.23,1,.32,1);
+}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(1100px 680px at 100% 0%,var(--glow),transparent 62%),radial-gradient(900px 600px at 0% 100%,#fff,transparent 60%);
+  min-height:100dvh;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+u{text-decoration:none}
+.wrap{max-width:1360px;margin:0 auto;padding:20px 28px 120px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px}
+.logo img{width:34px;height:34px}
+.nav{display:flex;gap:4px;background:var(--glass);backdrop-filter:blur(16px);border-radius:999px;padding:5px}
+.nav a{padding:9px 18px;border-radius:999px;font-size:14px;color:var(--ink-2)}
+.nav a.on{background:var(--dark);color:#fff}
+.date{font-size:14px;color:var(--ink-3)}
+h1{margin:44px 0 30px;font-size:52px;font-weight:300;letter-spacing:-.04em;line-height:1.05}
+/* 인사말 아래 매출 예측 한 줄. 발주 탭으로 넘어가면 매출 위젯 자리로 이어진다 */
+/* 데스크톱: 인사말 오른쪽에 작은 위젯처럼 (좁고 높게) */
+.hello{display:flex;justify-content:space-between;align-items:center;gap:24px;margin:40px 0 24px}
+.hello h1{margin:0;font-size:64px}
+.ev{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:16px;width:360px;padding:14px 20px;border-radius:24px;background:var(--red);color:#fff}
+.ev .lb{grid-column:1;grid-row:1;font-size:13px;color:rgba(255,255,255,.78)}
+.ev .pct{grid-column:1;grid-row:2;margin-top:6px;font-size:40px;font-weight:300;line-height:1;letter-spacing:-.04em}
+.ev .pct small{font-family:var(--font);font-size:16px;margin-left:2px;color:rgba(255,255,255,.8)}
+/* 글자 폭만큼만 차지해야 발주 탭 위젯으로 넘어갈 때 글자가 부풀지 않는다 */
+.ev .lb,.ev .pct{justify-self:start}
+/* 누르면 발주 탭과 같은 매출 모달이 열린다 */
+.ev{text-align:left;transition:transform 160ms var(--ease-out)}
+.ev:active{transform:scale(.97)}
+.ev.gone{visibility:hidden}
+.ev .wk{grid-column:2;grid-row:1/3;display:flex;align-items:flex-end;justify-content:flex-end;gap:5px;height:44px;align-self:end}
+.ev .wk i{width:14px;border-radius:4px;background:rgba(255,255,255,.28)}
+.ev .wk i.hot{background:#fff}
+
+.home{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.big{display:flex;flex-direction:column;gap:22px;min-height:560px;padding:30px 32px 32px;border-radius:30px}
+.order{color:#fff;background:radial-gradient(360px 280px at 90% 0%,rgba(207,34,41,.35),transparent 70%),linear-gradient(170deg,var(--dark-2),#1f1f1d)}
+.recv{background:var(--glass);backdrop-filter:blur(16px)}
+.big h2{font-size:30px;font-weight:600;letter-spacing:-.03em}
+
+ul{list-style:none;padding:0;display:grid;gap:14px}
+li{display:grid;grid-template-columns:1fr auto;align-items:baseline;column-gap:16px}
+li .nm{font-size:22px;font-weight:500}
+li .q{font-size:28px;font-weight:300;white-space:nowrap;text-align:right}
+li .q u{font-family:var(--font);font-size:15px;color:var(--ink-3);margin-left:2px}
+.order li .q u{color:var(--on-dark-3)}
+li .src{font-size:13px;color:var(--on-dark-3)}
+li .won{font-size:13px;color:var(--on-dark-3);text-align:right}
+
+.go{display:flex;align-items:center;justify-content:center;gap:10px;height:68px;margin-top:auto;border-radius:999px;background:var(--red);color:#fff;font-size:22px;font-weight:600}
+.go svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.go .num{font-weight:400;opacity:.85;margin-left:6px}
+.recv .go{background:var(--dark)}
+.sum{display:flex;justify-content:space-between;align-items:baseline;margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);font-size:15px;color:var(--on-dark-2)}
+.sum .num{font-size:22px;color:#fff}
+.sum + .go{margin-top:0}
+
+@media (max-width:820px){
+  .wrap{padding:14px 16px 110px}
+  .nav{position:fixed;left:16px;right:16px;bottom:14px;justify-content:space-between;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.12);z-index:5}
+  .nav a{padding:9px 10px;font-size:12px}
+  .date{display:none}
+  .hello{display:block;margin:26px 0 18px}
+  h1{font-size:36px}
+  .hello h1{margin:0 0 14px;font-size:36px}
+  .home{grid-template-columns:minmax(0,1fr)}
+  .big{min-height:0;padding:24px 22px 22px}
+  .ev{grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-items:center;gap:6px 14px;width:100%;padding:14px 18px;border-radius:22px}
+  .ev .pct{grid-row:2;margin:0;font-size:32px}
+  .ev .wk{grid-column:2;grid-row:2;height:30px;gap:4px}
+  .ev .wk i{width:10px;border-radius:3px}
+}
+/* 홈 발주 카드 → 발주 탭: 페이지가 바뀌어도 카드 · 제목 · 품목명 · 수량이 제자리로 이어진다 (cross-document View Transition) */
+@view-transition{navigation:auto}
+::view-transition-group(*){animation-duration:800ms;animation-timing-function:cubic-bezier(.65,0,.35,1)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:420ms}
+::view-transition-old(rec-card){animation-duration:360ms}
+/* 매출 띠 → 위젯: 글자 · 막대 · 화살표는 따로 움직이고, 빨간 바탕만 늘어난다 (바탕엔 글자가 없어 늘어나도 티가 안 남) */
+::view-transition-old(sales-card),::view-transition-new(sales-card){width:100%;height:100%}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;height:88px;margin-top:16px}
+.wk span{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%;font-size:11px;color:rgba(255,255,255,.7)}
+.wk i{display:block;width:100%;border-radius:6px;background:rgba(255,255,255,.28)}
+.wk .hot i{background:#fff}
+.wk .hot{color:#fff;font-weight:600}
+/* 모달: 위젯이 그대로 커진다.
+   위젯의 오른쪽 위 모서리에 붙어서 왼쪽 · 아래로 넓어진다. 오른쪽 칸은 위젯과 같은 폭이라
+   이번 주 매출 · 숫자 · 마라톤 · 막대가 제자리에서 커지고, 왼쪽에 분석이 새로 열린다 */
+.fxs{position:fixed;inset:0;z-index:19;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity 320ms ease}
+.fxs.on{opacity:1;pointer-events:auto}
+.fx{position:fixed;inset:0;z-index:20;background:var(--red);color:#fff;visibility:hidden;pointer-events:none}
+.fx.on{visibility:visible}
+.fx-box{position:absolute;overflow:auto;overscroll-behavior:contain;pointer-events:auto;scrollbar-width:none}
+html.lock{overflow:hidden}
+.fxs{touch-action:none}
+.fx-box::-webkit-scrollbar{display:none}
+.fx-in{display:grid;grid-template-columns:var(--cw,336px) minmax(0,1fr);gap:0 34px;padding:20px 22px 22px}
+.fx-r{grid-column:1;grid-row:1}
+.fx-l{grid-column:2;grid-row:1;display:flex;flex-direction:column}
+.fx-l .say{flex:1;align-content:start}
+.note{margin-top:12px;text-align:right;font-size:12px;color:rgba(255,255,255,.6)}
+.fx-top{display:flex;justify-content:space-between;align-items:center;height:21px;font-size:14px;color:rgba(255,255,255,.78)}
+.fx-r .fx-top{justify-content:flex-start}
+.fx-in{position:relative}
+.fx-x{position:absolute;top:12px;right:13px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center;transition:transform 140ms var(--ease-out),background 160ms ease}
+.fx-x:active{transform:scale(.92)}
+.fx-x svg{width:16px;height:16px;stroke:#fff;stroke-width:2.4;fill:none;stroke-linecap:round}
+.fx h2{font-family:var(--numeral);font-size:96px;font-weight:300;line-height:1;letter-spacing:-.05em;margin:14px 0 6px}
+.fx h2 small{font-family:var(--font);font-size:30px;margin-left:4px;color:rgba(255,255,255,.8)}
+.fx .sub{font-size:19px;font-weight:500;display:inline-block}
+.fx .wk{height:236px;margin-top:22px;gap:8px}
+.fx .wk span{font-size:13px}
+.fx .wk b{font-family:var(--numeral);font-weight:400;font-size:13px;color:rgba(255,255,255,.85)}
+.fx .wk em{font-style:normal}
+.fx h2,.fx .sub,.fx .wk i{transform-origin:0 0}
+.fx .date{font-size:14px;color:rgba(255,255,255,.78);height:21px}
+/* 위젯에 없던 것만 흐림 → 선명 */
+.fx .fade{opacity:0;filter:blur(6px);transform:translateY(6px);
+  transition:opacity 280ms var(--ease-out),filter 280ms var(--ease-out),transform 280ms var(--ease-out)}
+.fx .wk .fade{transform:none}
+.fx.ready .fade{opacity:1;filter:none;transform:none}
+.fx.ready .fx-l .fade{transition-delay:60ms}
+.fx.closing .fade{transition-duration:110ms;transition-delay:0ms!important}
+.fac{margin-top:18px;border-top:1px solid rgba(255,255,255,.22)}
+.fac div{display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.22)}
+.fac .n{font-size:16px}
+.fac .n small{font-size:13px;color:rgba(255,255,255,.7);margin-left:8px}
+.fac .v{font-family:var(--numeral);font-size:22px;font-weight:300}
+.fac .bar{grid-column:1/-1;height:5px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden}
+.fac .bar i{display:block;height:100%;border-radius:999px;background:#fff;transform-origin:left;transform:scaleX(0);transition:transform 600ms var(--ease-out)}
+.fx.ready .fac .bar i{transform:scaleX(1)}
+/* 분석 문장: 다 쳤을 때 높이를 미리 잡아 두어(투명한 원문을 겹쳐 둠) 치는 동안 아래가 밀리지 않는다 */
+.say{display:grid;margin-top:14px;background:rgba(255,255,255,.12);border-radius:22px;padding:18px 20px;font-size:16px;line-height:1.75;white-space:pre-wrap}
+.say > *{grid-area:1/1}
+.say .ghost{visibility:hidden}
+.say .caret{display:inline-block;width:2px;height:1.1em;background:#fff;vertical-align:-3px;margin-left:2px;animation:blink 900ms steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (max-width:820px){.fx-in{grid-template-columns:minmax(0,1fr)}.fx-r,.fx-l,.fx-l .fx-top{display:contents}.fx .date{display:none}.fx-r .fx-top{order:1}.fx h2{order:2}.fx .sub{order:3}.fx .say{order:4;margin-top:18px}.fx .wk{order:5}.fac{order:6}.note{order:7}.fx h2{font-size:80px}.fx .wk{gap:6px}.say{padding:16px 18px}
+  .fx-r .fx-top{grid-row:1;grid-column:1;position:sticky;top:0;z-index:2;height:auto;margin:-20px -20px 0;padding:20px 20px 14px;background:var(--red)}
+  .fx-x{grid-row:1;grid-column:1;justify-self:end;align-self:start;position:sticky;top:12px;z-index:3;margin:-8px -7px 0 0}}
+
+/* DECISIONS #101: 접힌 카드는 빨강, 펼친 모달만 중성 바탕. */
+:root{--forecast-surface:var(--bg);--forecast-ink:var(--ink);--forecast-muted:var(--ink-2);--forecast-accent:var(--red);--forecast-bar:var(--ink-3);--forecast-rule:var(--rule);--forecast-panel:var(--paper)}
+.fx,.fx-r .fx-top{background:var(--forecast-surface);color:var(--forecast-ink)}
+.fx h2{color:var(--forecast-accent)}
+.fx .wk span,.fx-top,.fx h2 small,.fx .date,.fx .wk b,.fac .n small,.note{color:var(--forecast-muted)}
+.fx .wk i{background:var(--forecast-bar)}
+.fx .wk .hot i{background:var(--forecast-accent)}
+.fx .wk .hot{color:var(--forecast-ink)}
+.fx-x,.say{background:var(--forecast-panel)}
+.fx-x svg{stroke:var(--forecast-ink)}
+.fac,.fac div{border-color:var(--forecast-rule)}
+.fac .bar{background:var(--forecast-rule)}
+.fac .bar i,.say .caret{background:var(--forecast-accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo"><img src="../../../frontend/public/logo.png" alt="">지그재고</div>
+    <nav class="nav"><a class="on">홈</a><a>발주</a><a>발주 이력</a><a>레시피</a><a>거래처 및 재료</a></nav>
+    <div class="date">11월 4일 수요일</div>
+  </header>
+
+  <div class="hello">
+    <h1>안녕하세요, 잠실점</h1>
+    <button class="ev" id="sales" onclick="openFx()" style="view-transition-name:sales-card"><span class="lb" style="view-transition-name:sales-lb">이번 주 매출 예측</span><span class="pct num" id="salesNum" style="view-transition-name:sales-num">+38<small>%</small></span><span class="wk" id="salesWk"><i style="height:50%;view-transition-name:wk-0"></i><i style="height:57%;view-transition-name:wk-1"></i><i style="height:60%;view-transition-name:wk-2"></i><i style="height:62%;view-transition-name:wk-3"></i><i style="height:73%;view-transition-name:wk-4"></i><i style="height:80%;view-transition-name:wk-5"></i><i class="hot" style="height:100%;view-transition-name:wk-6"></i></span></button>
+  </div>
+
+  <div class="home">
+    <a class="big order" href="order_v5.html#fromhome" style="view-transition-name:rec-card">
+      <h2 style="view-transition-name:rec-title">오늘 발주 추천 품목</h2>
+      <ul>
+        <li><span class="nm" style="view-transition-name:nm-onion">양파</span><span class="q num" style="view-transition-name:q-onion">8<u>망</u></span>
+            <span class="src">식봄</span><span class="won num">151,200원</span></li>
+        <li><span class="nm" style="view-transition-name:nm-chicken">닭다리살</span><span class="q num" style="view-transition-name:q-chicken">14<u>kg</u></span>
+            <span class="src">대성유통</span><span class="won num">64,400원</span></li>
+        <li><span class="nm" style="view-transition-name:nm-leek">대파</span><span class="q num" style="view-transition-name:q-leek">4<u>단</u></span>
+            <span class="src">한빛상회</span><span class="won num">12,800원</span></li>
+        <li><span class="nm" style="view-transition-name:nm-milk">우유</span><span class="q num" style="view-transition-name:q-milk">6<u>팩</u></span>
+            <span class="src">한빛상회</span><span class="won num">16,200원</span></li>
+        <li><span class="nm" style="view-transition-name:nm-rice">떡</span><span class="q num" style="view-transition-name:q-rice">5<u>kg</u></span>
+            <span class="src">식봄</span><span class="won num">19,900원</span></li>
+      </ul>
+      <div class="sum"><span>기존 거래처에서만 살 때보다</span><span class="num">−14,000원</span></div>
+      <span class="go">발주하기<span class="num">264,500원</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="big recv">
+        <h2>오늘 입고 예정 품목</h2>
+        <ul>
+          <li><span class="nm">닭다리살</span><span class="q num">10<u>kg</u></span></li>
+          <li><span class="nm">양배추</span><span class="q num">3<u>통</u></span></li>
+          <li><span class="nm">고춧가루</span><span class="q num">2<u>kg</u></span></li>
+        </ul>
+        <span class="go">발주 이력 보기<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</div>
+<div class="fxs" id="fxs" onclick="closeFx()"></div>
+<div class="fx" id="fx" role="dialog" aria-modal="true" aria-label="이번 주 매출 예측"><div class="fx-box" id="fxBox"><div class="fx-in">
+  <div class="fx-r">
+    <div class="fx-top"><span>이번 주 매출 예측</span></div>
+    <h2 id="fxNum">+38<small>%</small></h2>
+    <div class="sub fade" id="fxWhy">일 11.8 잠실 마라톤</div>
+    <div class="wk" id="fxWk">
+      <span><b class="fade">98</b><i style="height:110px"></i><em class="fade">월</em></span><span><b class="fade">112</b><i style="height:126px"></i><em class="fade">화</em></span>
+      <span><b class="fade">118</b><i style="height:132px"></i><em class="fade">오늘</em></span><span><b class="fade">121</b><i style="height:136px"></i><em class="fade">목</em></span>
+      <span><b class="fade">156</b><i style="height:150px"></i><em class="fade">금</em></span><span><b class="fade">172</b><i style="height:164px"></i><em class="fade">토</em></span>
+      <span class="hot"><b class="fade">214</b><i style="height:184px"></i><em class="fade">일</em></span>
+    </div>
+    <div class="fac fade">
+      <div><span class="n">잠실 마라톤<small>가게 앞 1.2km · 3만 명</small></span><span class="v">+26%</span><span class="bar"><i style="width:68%;transition-delay:200ms"></i></span></div>
+      <div><span class="n">단풍철 주말<small>금 ~ 일</small></span><span class="v">+8%</span><span class="bar"><i style="width:21%;transition-delay:260ms"></i></span></div>
+      <div><span class="n">맑음<small>낮 14°</small></span><span class="v">+4%</span><span class="bar"><i style="width:11%;transition-delay:320ms"></i></span></div>
+    </div>
+  </div>
+  <div class="fx-l">
+    <div class="fx-top fade"><span class="date">11월 2일 ~ 8일</span><button class="fx-x" onclick="closeFx()" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="say fade"><div class="ghost" id="sayGhost"></div><div id="say"></div></div>
+    <div class="note fade">지그재고 AI 매출 예측은 틀릴 수 있습니다</div>
+  </div>
+</div></div></div>
+<script>
+// 매출 위젯 → 전체 화면. 위젯 사각형에서 clip-path 로 펼치고, 닫을 때 같은 자리로 접는다
+const SAY="이번 주 매출은 평소보다 38% 많을 것으로 보여요.\n\n가장 큰 이유는 일요일 잠실 마라톤이에요. 참가자 3만 명이 가게 앞 1.2km 코스를 지나가고, 작년 같은 대회 날 이 상권 매출은 평소 일요일보다 41% 늘었어요.\n\n금요일부터는 단풍철 주말이라 8%쯤 더 늘 것 같아요. 날씨는 맑지만 영향은 크지 않아요.\n\n그래서 양파 2망, 닭다리살 3kg, 떡 1kg을 평소보다 더 넣어 두었어요. 일요일 점심 전에 받을 수 있게 금요일 도착으로 맞췄어요.";
+let typing=0;
+const reduce=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
+// 감쇠 스프링(ζ=0.8, 넘침 약 1.5%)을 CSS linear() 로 근사
+function spring(z=.8,n=40){ const wd=Math.sqrt(1-z*z), T=Math.log(400)/z, pts=[];
+  for(let i=0;i<=n;i++){ const t=i/n*T; pts.push(1-Math.exp(-z*t)*(Math.cos(wd*t)+z/wd*Math.sin(wd*t))); }
+  pts[n]=1; return `linear(${pts.map(v=>v.toFixed(4)).join(",")})`; }
+const SPRING=spring();
+const $=id=>document.getElementById(id);
+const clipOf=r=>`inset(${r.top}px ${innerWidth-r.right}px ${innerHeight-r.bottom}px ${r.left}px round 30px)`;
+// 모달 상자를 위젯의 오른쪽 위 모서리에 붙인다. 오른쪽 칸 폭 = 위젯 안쪽 폭
+function place(){
+  const w=$("sales").getBoundingClientRect(), box=$("fxBox"), phone=innerWidth<=820;
+  // 폰에서 위젯이 화면 아래쪽이면 상자는 화면 위에서 연다 (아래 공간이 좁으므로)
+  const top=phone&&w.top>innerHeight*.3?16:w.top;
+  box.style.top=top+"px"; box.style.right=(innerWidth-w.right)+"px";
+  // 오른쪽 칸 = 위젯 폭, 왼쪽 분석 칸은 최소 420px
+  box.style.width=(phone?w.width:Math.min(Math.max(920,w.width+460),innerWidth-32))+"px";
+  box.style.maxHeight=(innerHeight-top-16)+"px";
+  box.style.setProperty("--cw",(w.width-44)+"px");
+  $("sayGhost").textContent=SAY;
+}
+// 위젯에 있던 것 → 모달의 같은 것. 글자는 비율 유지, 막대는 가로세로 따로
+function pairs(){
+  const wb=[...$("salesWk").querySelectorAll("i")], mb=[...$("fxWk").querySelectorAll("i")];
+  return [[$("salesNum"),$("fxNum"),1],...wb.map((b,k)=>[b,mb[k],0])];
+}
+function from(a,b,keep){ const A=a.getBoundingClientRect(), B=b.getBoundingClientRect();
+  const sx=keep?A.height/B.height:A.width/B.width, sy=A.height/B.height;
+  return `translate(${A.left-B.left}px,${A.top-B.top}px) scale(${sx},${sy})`; }
+// 글꼴이 늦게 들어오거나 창 크기가 바뀌어 상자 높이가 달라지면 잘라 낸 영역도 따라간다
+new ResizeObserver(()=>{ const fx=$("fx"); if(fx.classList.contains("on")&&!fx.classList.contains("closing")&&!fx.getAnimations().length) fx.style.clipPath=clipOf($("fxBox").getBoundingClientRect()); }).observe($("fxBox"));
+addEventListener("resize",()=>{ if($("fx").classList.contains("on")){ place(); $("fx").style.clipPath=clipOf($("fxBox").getBoundingClientRect()); } });
+function openFx(){
+  document.documentElement.classList.add("lock");
+  const fx=$("fx"), src=clipOf($("sales").getBoundingClientRect());
+  place(); fx.classList.remove("closing"); fx.classList.add("on"); $("fxBox").scrollTop=0; $("fxs").classList.add("on");
+  const to=clipOf($("fxBox").getBoundingClientRect()), d=reduce()?0:560, ps=pairs().map(([a,b,k])=>[b,from(a,b,k)]);
+  fx.style.clipPath=to; $("sales").classList.add("gone");
+  const main=fx.animate([{clipPath:src},{clipPath:to}],{duration:d,easing:SPRING});
+  ps.forEach(([el,t])=>el.animate([{transform:t},{transform:"none"}],{duration:d,easing:SPRING}));
+  main.finished.then(()=>type());
+  setTimeout(()=>fx.classList.add("ready"), reduce()?0:160);
+  document.addEventListener("keydown",esc);
+}
+function closeFx(){
+  const fx=$("fx"), to=clipOf($("sales").getBoundingClientRect()), src=fx.style.clipPath, d=reduce()?0:320, o={duration:d,delay:70,easing:"cubic-bezier(.23,1,.32,1)",fill:"forwards"};
+  clearTimeout(typing); fx.classList.add("closing"); fx.classList.remove("ready"); $("fxs").classList.remove("on");
+  const ps=pairs().map(([a,b,k])=>b.animate([{transform:"none"},{transform:from(a,b,k)}],o));
+  const main=fx.animate([{clipPath:src},{clipPath:to}],o);
+  main.finished.then(()=>{ document.documentElement.classList.remove("lock"); $("sales").classList.remove("gone"); fx.classList.remove("on"); main.cancel(); ps.forEach(a=>a.cancel()); });
+  document.removeEventListener("keydown",esc);
+}
+const esc=e=>{ if(e.key==="Escape") closeFx(); };
+const escHTML=t=>t.replace(/[<&]/g,c=>c==="<"?"&lt;":"&amp;");
+// API 로 받은 문장을 글자 단위로 친다. 문장 끝에서 잠깐 쉰다
+function type(upto){
+  const el=document.getElementById("say"); let i=0;
+  if(reduce()){ el.textContent=SAY; return; }
+  if(upto){ el.innerHTML=escHTML(SAY.slice(0,upto))+'<span class="caret"></span>'; return; }
+  (function tick(){
+    i++; el.innerHTML=escHTML(SAY.slice(0,i))+'<span class="caret"></span>';
+    if(i<SAY.length){ const ch=SAY[i-1]; typing=setTimeout(tick, ch==="."?110: ch==="\n"?50: 9); }
+    else setTimeout(()=>{ const c=el.querySelector(".caret"); if(c) c.remove(); },1200);
+  })();
+}
+</script>
+</body>
+</html>

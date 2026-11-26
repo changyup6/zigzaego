@@ -1,0 +1,75 @@
+/* 시안 .btn: 46px 알약, 15px 600. Primary 는 화면당 하나 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-inline);
+  height: var(--btn-h);
+  padding: 0 var(--sp-button-x);
+  border: 0;
+  border-radius: var(--r-control);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    transform 160ms var(--ease),
+    background-color 120ms ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+}
+
+.primary {
+  background: var(--red);
+  color: var(--on-red);
+}
+
+.primary:active {
+  background: var(--red-deep);
+}
+
+.ghost {
+  background: var(--paper-2);
+  color: var(--ink-2);
+}
+
+.paper {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.quiet {
+  flex: 0 0 auto;
+  background: transparent;
+  color: var(--ink-2);
+  padding-inline: var(--sp-control);
+}
+
+.sm {
+  flex: 0 0 auto;
+  height: var(--btn-sm-h);
+  padding-inline: var(--sp-chip-x);
+  font-size: var(--fs-label);
+}
+
+.block {
+  width: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover:not(:disabled) {
+    background: var(--red-deep);
+  }
+
+  .ghost:hover:not(:disabled) {
+    background: var(--rule);
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "description": "입력 상품명마다 품목군 코드 · 형태 · 총량 · 확신도 · 근거. 입력 하나에 items 항목 하나, 같은 순서.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "입력 상품명 그대로"
+          },
+          "item_group_code": {
+            "type": ["string", "null"],
+            "description": "품목군 표의 코드. 원물 · 손질품이 아니거나 표에 없으면 null"
+          },
+          "form": {
+            "type": "string",
+            "enum": ["RAW", "PREPARED", "PROCESSED", "NONFOOD", "UNKNOWN"]
+          },
+          "qty": {
+            "type": ["number", "null"],
+            "description": "상품명에서 읽은 전체 총량. 없으면 null"
+          },
+          "qty_unit": {
+            "type": ["string", "null"],
+            "enum": ["G", "ML", "EA", null]
+          },
+          "confidence": {
+            "type": "number",
+            "description": "품목군 판정 확신 0~1"
+          },
+          "reason": {
+            "type": "string",
+            "description": "짧은 근거"
+          }
+        },
+        "required": ["name", "item_group_code", "form", "qty", "qty_unit", "confidence", "reason"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["items"],
+  "additionalProperties": false
+}

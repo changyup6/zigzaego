@@ -1,0 +1,18 @@
+# 운영자용 초기 계정 생성 (S15P31A308-37). 실행법은 backend/README.md "계정 만들기"
+# 웹 서버를 띄우지 않고 CreateStoreAccountRunner 만 돌린 뒤 끝난다
+spring:
+  main:
+    web-application-type: none
+  docker:
+    compose:
+      # bootRun 이 끝날 때 로컬 Postgres · Redis 컨테이너를 내리지 않는다 (서버를 같이 띄워 둔 경우)
+      lifecycle-management: start-only
+
+app:
+  create-account:
+    email: ${CREATE_ACCOUNT_EMAIL:}
+    password: ${CREATE_ACCOUNT_PASSWORD:}
+    owner-name: ${CREATE_ACCOUNT_OWNER_NAME:}
+    store-name: ${CREATE_ACCOUNT_STORE_NAME:}
+    store-display-name: ${CREATE_ACCOUNT_STORE_DISPLAY_NAME:}
+    timezone: ${CREATE_ACCOUNT_TIMEZONE:Asia/Seoul}

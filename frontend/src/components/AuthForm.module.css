@@ -1,0 +1,74 @@
+/* 시안 app_all.html .auth · .auth-mark · .terms */
+.login {
+  display: grid;
+  gap: var(--sp-gutter);
+  width: 100%;
+  max-width: var(--auth-max-w);
+  margin: var(--sp-gap) auto 0;
+}
+
+.mark {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-grid);
+  margin: var(--sp-grid) 0 var(--sp-gap);
+  text-align: center;
+}
+
+.mark img {
+  width: var(--logo-auth);
+  height: var(--logo-auth);
+  object-fit: contain;
+}
+
+.mark h1 {
+  font-size: var(--fs-hero-m);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.login .block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-row);
+  padding: var(--sp-card-x);
+}
+
+.terms {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--sp-tight);
+  border-top: 1px solid var(--rule);
+}
+
+.terms .all {
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-block);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.req {
+  margin-left: auto;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--red-text);
+}
+
+.fail {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--red-text);
+}
+
+.alt {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 761px) {
+  .mark h1 {
+    font-size: var(--fs-hero);
+  }
+}

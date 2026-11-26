@@ -1,0 +1,48 @@
+/* 시안 .field · select.sel: 라벨 위 12px 600, 입력 44px */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-inline);
+  min-width: 0;
+}
+
+.field > span {
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-width: 0;
+  height: var(--control-h);
+  padding: 0 var(--sp-grid);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background-color: var(--paper);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.field input::placeholder {
+  color: var(--ink-3);
+}
+
+.field select {
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7684' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-grid) center;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--sp-grid);
+}

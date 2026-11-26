@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지그재고 재료 카테고리 아이콘</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Lexend:wght@300;400;500&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* frontend/src/styles/tokens.css 값 그대로 */
+:root{
+  --ground:#f3f1ec;--glow:#f7d9d6;--paper:#fff;
+  --ink:#1d1d1b;--ink-2:#4a4a46;--ink-3:#85847e;--ink-4:#9d9c96;
+  --rule:rgba(29,29,27,.09);--red:#cf2229;
+  --font:"Noto Sans KR",system-ui,sans-serif;--numeral:"Lexend","Noto Sans KR",sans-serif;--hand:"Jua","Noto Sans KR",sans-serif;
+  --art-line:5px;--art-line-thin:3px;--ic-cat:22px;
+  --r-card:30px;--r-input:14px;--fs-hand-s:16px;--fs-block:14px;--fs-body:15px;--fs-tile-num:21px;--fs-caption:12px;
+}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--font);color:var(--ink);background:var(--ground);
+  background-image:radial-gradient(1100px 680px at 100% 0%,var(--glow),transparent 62%);
+  min-height:100dvh;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5}
+.num{font-family:var(--numeral);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.wrap{max-width:1360px;margin:0 auto;padding:20px 28px 80px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:18px}
+.logo img{width:34px;height:34px}
+h1{margin:40px 0 28px;font-size:52px;font-weight:300;letter-spacing:-.04em;line-height:1.05}
+
+/* 아이콘: 거래처 가게 그림(.art)과 같은 선. 빨간 선 · 흰 면 · 둥근 끝 (frontend/src/components/CategoryIcon.module.css) */
+.ic{flex:none;width:var(--ic-cat);height:var(--ic-cat);vertical-align:middle;overflow:visible}
+.ic *{fill:var(--paper);stroke:var(--red);stroke-width:var(--art-line);stroke-linecap:round;stroke-linejoin:round}
+.ic .fill{fill:var(--red)}
+.ic .open{fill:none}
+.ic .thin{stroke-width:var(--art-line-thin)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{display:flex;align-items:center;gap:24px;padding:22px 24px;border-radius:var(--r-card);background:var(--paper)}
+.card .big{width:132px;height:132px}
+.card h2{font-family:var(--hand);font-size:22px;font-weight:400;color:var(--red);margin-bottom:12px}
+
+/* 실제 크기: 그림 보기 카테고리 머리(.ch) · 재료 칸(.it) · 표 묶음 머리(.grp). frontend/src/components/IngredientsTab.module.css 와 같은 값 */
+.it{display:flex;flex-direction:column;justify-content:center;min-width:0;height:56px;padding:0 10px;border-radius:var(--r-input)}
+.it b{max-width:100%;overflow:hidden;font-size:var(--fs-block);font-weight:600;color:var(--ink-2);white-space:nowrap;text-overflow:ellipsis}
+.ch{display:flex;align-items:center;gap:4px;height:24px;padding:0 10px;font-family:var(--hand);font-size:var(--fs-hand-s);color:var(--red)}
+.it .num{font-size:var(--fs-tile-num);line-height:1.2}
+.it small{margin-left:2px;font-family:var(--font);font-size:var(--fs-caption);color:var(--ink-3)}
+.grp{padding:6px 14px}
+.grp b{margin:0 8px 0 6px;font-family:var(--hand);font-size:var(--fs-hand-s);font-weight:400;color:var(--red);vertical-align:middle}
+.grp .num{font-size:var(--fs-body);color:var(--ink-3);vertical-align:middle}
+
+.strip{display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-bottom:28px;padding:18px 24px;border-radius:var(--r-card);background:var(--paper)}
+@media (max-width:760px){.wrap{padding:16px 16px 60px}h1{font-size:36px}.card .big{width:96px;height:96px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo"><img src="../../../frontend/public/logo.png" alt="">지그재고</div>
+  <h1>재료 카테고리</h1>
+  <div class="strip" id="strip"></div>
+  <div class="grid" id="grid"></div>
+</div>
+<script>
+// frontend/src/components/CategoryIcon.tsx 의 ICON 과 같은 값 (48×48). "" = 흰 면, f = 빨간 면, o = 선만, t = 가는 선
+const ICON = {
+  MEAT: [
+    ["o", "M9 39L39 9"],
+    ["f", "M3.5 36a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M9.5 42a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"],
+    ["f", "M33.5 6a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M39.5 12a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"],
+    ["", "M16 32A11.5 9.5 -45 1 1 32 16A11.5 9.5 -45 1 1 16 32Z"],
+  ],
+  SEAFOOD: [
+    ["", "M34 24L43 15V33Z"],
+    ["", "M5 24C11 12 29 11 37 24C29 37 11 36 5 24Z"],
+    ["f", "M11 22a2 2 0 1 0 4 0a2 2 0 1 0-4 0"],
+    ["t", "M20 17C23 21 23 27 20 31"],
+  ],
+  VEGETABLE: [
+    ["f", "M29 12C25 9 25 5 27 4C31 5 32 9 29 12Z"],
+    ["f", "M35 18C38 15 42 15 44 17C42 20 38 21 35 18Z"],
+    ["f", "M32 14C33 9 37 6 41 6C41 10 38 14 32 14Z"],
+    ["", "M23 12C27 7 40 15 36 21L11 42C8 44 4 41 6 38Z"],
+    ["t", "M19 21L23 24M13 29L16 31"],
+  ],
+  FRUIT: [
+    ["", "M24 15C19 10 6 11 6 25C6 36 14 43 20 41C22 40 26 40 28 41C34 43 42 36 42 25C42 11 29 10 24 15Z"],
+    ["o", "M24 15C24 11 25 8 27 5"],
+    ["f", "M27 10C29 6 34 5 37 6C35 10 31 12 27 10Z"],
+    ["t", "M12 25C12 21 14 19 17 18"],
+  ],
+  EGG_DAIRY: [
+    ["", "M27 10L35 6L42 16L34 20Z"],
+    ["", "M34 20L42 16V39L34 43Z"],
+    ["", "M20 20L27 10L34 20V43H20Z"],
+    ["", "M14 20C20 20 24 30 24 34C24 40 20 43 14 43C8 43 4 40 4 34C4 30 8 20 14 20Z"],
+  ],
+  GRAIN_NOODLE: [
+    ["", "M17 40H31V43H17Z"],
+    ["", "M11 24C11 9 37 9 37 24Z"],
+    ["", "M6 24H42C42 34 34 41 24 41C14 41 6 34 6 24Z"],
+    ["t", "M19 17L21 16M26 15L28 16"],
+  ],
+  TOFU_BEAN: [
+    ["o", "M39 9L43 5"],
+    ["", "M6 42C3 33 12 17 27 11C33 9 38 8 40 8C40 11 37 20 32 27C25 37 15 44 6 42Z"],
+    ["", "M11 35a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"],
+    ["", "M18 27a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"],
+    ["", "M25 19a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0"],
+  ],
+  SAUCE: [
+    ["f", "M18 3H30V8H18Z"],
+    ["", "M19 9H29V13C29 16 35 17 35 22V41C35 42 34 43 33 43H15C14 43 13 42 13 41V22C13 17 19 16 19 13Z"],
+    ["t", "M17 25H31V35H17Z"],
+  ],
+  PROCESSED: [
+    ["", "M10 13V38C10 43 38 43 38 38V13Z"],
+    ["", "M10 13C10 7 38 7 38 13C38 19 10 19 10 13Z"],
+    ["t", "M15 13C15 10 33 10 33 13C33 16 15 16 15 13Z"],
+    ["t", "M10 26C10 31 38 31 38 26"],
+  ],
+  BEVERAGE: [
+    ["o", "M27 11L30 4H36"],
+    ["", "M12 17H36L33 43H15Z"],
+    ["f", "M10 12H38V17H10Z"],
+    ["t", "M13 25H35M14 34H34"],
+  ],
+  OTHER: [
+    ["o", "M14 22C14 9 34 9 34 22"],
+    ["", "M6 22H42L37 42H11Z"],
+    ["t", "M17 27L18 37M24 27V37M31 27L30 37"],
+  ],
+};
+const NAME = {
+  MEAT: ["육류", "삼겹살", 12], SEAFOOD: ["수산", "고등어", 4], VEGETABLE: ["채소", "대파", 9],
+  FRUIT: ["과일", "레몬", 2], EGG_DAIRY: ["계란·유제품", "모짜렐라", 3], GRAIN_NOODLE: ["곡물·면·떡", "떡볶이떡", 5],
+  TOFU_BEAN: ["두부·콩", "두부", 2], SAUCE: ["양념·소스", "고추장", 14], PROCESSED: ["가공식품", "어묵", 6],
+  BEVERAGE: ["음료", "콜라", 3], OTHER: ["기타", "키친타올", 7],
+};
+const K = { f: "fill", o: "open", t: "open thin" };
+const svg = (code, cls = "ic") =>
+  `<svg class="${cls}" viewBox="0 0 48 48" aria-hidden="true">${ICON[code]
+    .map(([k, d]) => `<path${K[k] ? ` class="${K[k]}"` : ""} d="${d}"></path>`).join("")}</svg>`;
+
+document.getElementById("strip").innerHTML = Object.keys(ICON).map((c) => svg(c)).join("");
+document.getElementById("grid").innerHTML = Object.keys(ICON).map((c) => {
+  const [name, ing, n] = NAME[c];
+  return `<div class="card">
+    ${svg(c, "ic big")}
+    <div>
+      <h2>${name}</h2>
+      <div class="ch">${svg(c)}${name}</div><div class="it"><b>${ing}</b><span class="num">${n}<small>개</small></span></div>
+      <div class="grp">${svg(c)}<b>${name}</b><span class="num">${n}</span></div>
+    </div>
+  </div>`;
+}).join("");
+</script>
+</body>
+</html>

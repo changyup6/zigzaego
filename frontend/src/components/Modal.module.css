@@ -1,0 +1,111 @@
+/* 시안 stock_v3.html .modal: 가운데, 바닥색 ground 위에 흰 블록. 폰은 아래에 붙는다 */
+.modal {
+  width: min(var(--modal-w), calc(100% - 2 * var(--sp-card-x)));
+  max-width: none;
+  max-height: calc(100dvh - 2 * var(--sp-card-x));
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-card);
+  background: var(--ground);
+  color: var(--ink);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+.modal::backdrop {
+  background: var(--scrim);
+}
+
+.modal[open] {
+  animation: in 240ms var(--ease);
+}
+
+@keyframes in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-control);
+  padding: var(--sp-card-y) var(--sp-card-x) var(--sp-row);
+  background: var(--ground);
+}
+
+.head h2 {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--fs-modal-title);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--control-h);
+  height: var(--control-h);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-circle);
+  background: var(--paper);
+  color: var(--ink-2);
+  transition: transform 120ms var(--ease);
+}
+
+.close:active {
+  transform: scale(0.92);
+}
+
+.close svg {
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.body {
+  display: grid;
+  gap: var(--sp-grid);
+  padding: 0 var(--sp-card-x) var(--sp-card-x);
+}
+
+@media (max-width: 760px) {
+  .modal {
+    width: calc(100% - 2 * var(--sp-grid));
+    max-height: calc(100dvh - 2 * var(--sp-grid));
+    margin-bottom: var(--sp-grid);
+  }
+
+  .head {
+    padding: var(--sp-sheet) var(--sp-sheet) var(--sp-grid);
+  }
+
+  .body {
+    padding: 0 var(--sp-grid) var(--sp-grid);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal[open] {
+    animation: none;
+  }
+}

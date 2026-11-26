@@ -1,0 +1,14 @@
+/* 시안 .line--tight */
+.anchor {
+  scroll-margin-top: calc(var(--shell-h) + var(--sp-grid));
+}
+
+.ic {
+  width: var(--ic-row);
+  height: var(--ic-row);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

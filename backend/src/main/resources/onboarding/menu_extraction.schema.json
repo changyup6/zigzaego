@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "description": "메뉴마다 들어가는 구성요소와 배수. 입력 메뉴 하나에 menus 항목 하나.",
+  "properties": {
+    "menus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "menu": {
+            "type": "string",
+            "description": "입력 메뉴 이름을 한 글자도 바꾸지 않고 그대로"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["MAIN", "SET", "OPTION"],
+            "description": "MAIN 단품(사이드 · 음료 단품 포함), SET 여러 메뉴 묶음, OPTION 다른 메뉴에 붙여야만 파는 추가 · 변경"
+          },
+          "duplicateOf": {
+            "type": ["string", "null"],
+            "description": "같은 메뉴의 다른 표기면 먼저 나온 그 메뉴의 이름, 아니면 null"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "표기를 통일한 재료 이름. 소스는 '○○ 소스' 한 줄"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": ["BASE", "SAUCE", "PROTEIN", "VEGETABLE", "TOPPING", "SIDE", "DRINK", "OTHER"]
+                },
+                "mult": {
+                  "type": "number",
+                  "description": "그 재료 1인분의 몇 배가 들어가나. 양수. 보통 1, 더블 2"
+                }
+              },
+              "required": ["name", "role", "mult"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["menu", "kind", "duplicateOf", "components"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["menus"],
+  "additionalProperties": false
+}

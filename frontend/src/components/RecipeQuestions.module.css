@@ -1,0 +1,125 @@
+/* 레시피 확인. 값은 시안 weglee_3.html #question 의 규칙 그대로 (토큰으로 옮김) */
+
+/* 시안 .q__count · .q__title · .q__used */
+.count {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.count b {
+  font-family: var(--numeral);
+  color: var(--ink);
+}
+
+.title {
+  margin-top: var(--sp-control);
+  font-size: var(--fs-headline);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* 시안 .opts · .opts--2 · .opt */
+.opts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-gap);
+  margin-top: 18px;
+}
+
+.error {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--red-text);
+}
+
+.opt {
+  display: grid;
+  place-items: center;
+  height: var(--opt-h);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-card);
+  background: var(--paper);
+  font-family: var(--numeral);
+  font-size: var(--n40);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  transition:
+    transform 160ms var(--ease),
+    background-color 120ms ease;
+}
+
+.opt:active {
+  transform: scale(0.97);
+  background: var(--rule);
+}
+
+.opt:disabled {
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .opt:hover:not(:disabled) {
+    background: var(--rule);
+  }
+}
+
+/* 시안 .other · .qty-in · select.sel · .q__more */
+.other {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-gap);
+  margin-top: var(--sp-gap);
+}
+
+.qtyIn {
+  flex: 1 1 120px;
+  height: var(--control-h);
+  padding: 0 var(--sp-control);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background: var(--paper);
+  text-align: right;
+  appearance: textfield;
+}
+
+.qtyIn::-webkit-outer-spin-button,
+.qtyIn::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sel {
+  flex: 0 0 84px;
+  min-width: 0;
+  height: var(--control-h);
+  padding-left: var(--sp-grid);
+  padding-right: 36px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background-color: var(--paper);
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7684' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-grid) center;
+}
+
+.qtyIn:focus,
+.sel:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.more {
+  margin-top: var(--sp-gap);
+}
+
+/* 시안 .quiet-end */
+.end {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-gap) 0;
+}

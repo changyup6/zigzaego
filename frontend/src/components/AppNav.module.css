@@ -1,0 +1,115 @@
+/* 시안 .nav: 데스크톱은 가운데 알약 탭 막대, 폰은 화면 아래 떠 있는 흰 막대 */
+.nav {
+  display: flex;
+  gap: var(--sp-hair);
+  padding: var(--sp-tight);
+  border-radius: var(--r-pill);
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+}
+
+.tab {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-inline);
+  padding: 9px 16px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: background-color var(--dur-swap) var(--ease);
+}
+
+.tab[aria-current="page"] {
+  background: var(--dark);
+  color: var(--paper);
+}
+
+.ic,
+.s {
+  display: none;
+}
+
+.ic {
+  flex: none;
+  width: var(--ic-tab);
+  height: var(--ic-tab);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .tab:not([aria-current]):hover {
+    background: var(--paper-2);
+  }
+}
+
+/* 시안 중간 폭: 둘째 줄, 가로 스크롤 */
+@media (max-width: 1240px) {
+  .nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
+/* 시안 폰: 아래 떠 있는 막대, 아이콘 + 짧은 이름 */
+@media (max-width: 760px) {
+  .nav {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    z-index: 20;
+    /* 1240px 의 start 가 남으면 fixed 여도 내용 폭으로 줄어든다 */
+    justify-self: stretch;
+    justify-content: space-between;
+    max-width: none;
+    overflow: visible;
+    background: var(--nav-m-bg);
+    box-shadow: var(--shadow-nav-m);
+  }
+
+  .tab {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--sp-hair);
+    padding: var(--sp-gap) 0;
+    font-size: var(--fs-caption);
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+  }
+
+  .ic {
+    display: block;
+  }
+
+  .l {
+    display: none;
+  }
+
+  .s {
+    display: inline;
+  }
+
+  .dot {
+    position: absolute;
+    top: 0;
+    right: calc(50% - 26px);
+    min-width: 22px;
+    height: 22px;
+    padding: 0 var(--sp-inline);
+    font-size: var(--fs-caption);
+    line-height: 22px;
+  }
+}

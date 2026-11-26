@@ -1,0 +1,23 @@
+/* 시안 .bar: rule 트랙 위 잉크 막대, scaleX 로 채운다 */
+.track {
+  height: var(--bar-h);
+  border-radius: var(--r-pill);
+  background: var(--rule);
+  overflow: hidden;
+}
+
+.lg {
+  height: var(--bar-h-lg);
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ink);
+  transform-origin: left;
+  transition: transform 320ms var(--ease);
+}
+
+.short {
+  background: var(--red);
+}

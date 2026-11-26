@@ -1,0 +1,47 @@
+/* 옅은 회색 막대 + 왼쪽에서 오른쪽으로 쓸고 지나가는 빛.
+   빛은 화면 기준(fixed)이라 모든 막대에 한 줄로 이어져 지나간다 */
+.sk {
+  display: block;
+  flex: none;
+  max-width: 100%;
+  border-radius: var(--r-bar);
+  background-color: var(--rule-soft);
+  background-image: linear-gradient(
+    100deg,
+    transparent 35%,
+    var(--glass-orow) 50%,
+    transparent 65%
+  );
+  background-size: 200vw 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  animation: sk 1.6s linear infinite;
+}
+
+@keyframes sk {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+/* 검정 · 빨강 카드 자리에 놓는 옅은 판 */
+.box {
+  border-radius: var(--r-card);
+  background: var(--glass-row);
+}
+
+.pad {
+  display: grid;
+  gap: var(--sp-row);
+  padding: var(--sp-card-y) var(--sp-card-x);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk {
+    animation: none;
+    background-image: none;
+  }
+}

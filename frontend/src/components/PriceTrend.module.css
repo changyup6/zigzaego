@@ -1,0 +1,209 @@
+.chart {
+  padding: var(--sp-row) var(--sp-gutter);
+  border-radius: var(--r-row);
+  background: var(--ground);
+  min-width: 0;
+}
+.title,
+.legend {
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 8px;
+}
+.legend span,
+.legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.legend i {
+  width: 16px;
+  border-top: 2px dashed var(--ink-2);
+}
+.legend button[aria-pressed="true"] i {
+  border-color: var(--red);
+}
+.graph {
+  position: relative;
+  margin-top: 16px;
+  padding-left: 58px;
+  padding-right: 22px;
+}
+.yLabels {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  font-family: var(--numeral);
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+.yLabels span {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+}
+.plot {
+  position: relative;
+  height: 150px;
+}
+.plot svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.axis {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1;
+}
+.grid {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+.line,
+.market {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.market {
+  stroke: var(--ink-2);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+.point {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.point i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--point-color);
+  border: 1px solid var(--ground);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.point[aria-pressed="true"] i {
+  width: 10px;
+  height: 10px;
+}
+.point:focus-visible {
+  outline: 1px solid var(--ink);
+  border-radius: 50%;
+}
+.xLabels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 8px);
+  height: 20px;
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+.xLabels span {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.xLabels i {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  height: 5px;
+  border-left: 1px solid var(--ink-2);
+}
+.value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.4;
+  margin-top: 36px;
+  font-size: var(--fs-label);
+}
+.value strong {
+  font-family: var(--numeral);
+  font-size: var(--fs-card-title);
+  font-weight: 500;
+}
+@media (max-width: 760px) {
+  .middle {
+    display: none;
+  }
+  .middle:nth-child(4) {
+    display: block;
+  }
+  .graph {
+    padding-left: 50px;
+    padding-right: 15px;
+  }
+  .yLabels {
+    width: 43px;
+  }
+  .plot {
+    height: 135px;
+  }
+}
+
+.legend button {
+  padding: 4px 6px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+.legend button[aria-pressed="true"] {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+button.point {
+  z-index: 2;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 4;
+  transform: translateY(calc(-100% - 12px));
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  max-width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--r-input);
+  background: var(--dark);
+  color: var(--paper);
+  box-shadow: 0 4px 16px #0003;
+  font-size: var(--fs-caption);
+  pointer-events: none;
+}
+.tooltip strong {
+  font-family: var(--numeral);
+  font-size: var(--fs-headline);
+}
+.tooltip small {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}

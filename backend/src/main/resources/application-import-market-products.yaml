@@ -1,0 +1,16 @@
+# 운영자용 식자재몰 시세 적재 (S15P31A308-232 · 229). 실행법은 backend/README.md "식자재몰 시세 적재"
+# 웹 서버를 띄우지 않고 MarketProductImportRunner 만 돌린 뒤 끝난다. 시세를 넣었으면 같은 실행 안에서 상품명 라벨 배치(ADR-0014)가 이어서 돈다
+spring:
+  main:
+    web-application-type: none
+  docker:
+    compose:
+      # bootRun 이 끝날 때 로컬 Postgres · Redis 컨테이너를 내리지 않는다 (서버를 같이 띄워 둔 경우)
+      lifecycle-management: start-only
+
+app:
+  market-products:
+    # 크롤러 scripts/export_market_csv.py 가 만든 CSV 경로. 비우면 시세는 넣지 않는다
+    file: ${MARKET_PRODUCTS_FILE:}
+    # ai/scripts/market/classify_products.py 가 만든 라벨 CSV(labels.csv) 경로. 비우면 라벨은 넣지 않는다 (ADR-0012)
+    labels-file: ${MARKET_LABELS_FILE:}

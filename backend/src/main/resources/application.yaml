@@ -1,0 +1,164 @@
+spring:
+  application:
+    name: api
+  config:
+    # backend/.env 를 프로퍼티로 읽는다 (작업 디렉터리 = backend). 없으면 OS 환경 변수만 쓴다
+    import: optional:file:.env[.properties]
+
+  # 로컬(bootRun)은 compose.yaml, 테스트는 Testcontainers가 접속 정보를 덮어쓴다.
+  # 아래 값은 스테이징 · 운영처럼 컨테이너를 직접 띄우지 않을 때 쓰인다. 변수 설명은 backend/.env.example
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/zigzaego}
+    username: ${DB_USERNAME:}
+    password: ${DB_PASSWORD:}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+  # jobExecutor(JobExecutorConfig) 가 있어도 Boot 기본 실행기 applicationTaskExecutor 를 같이 만든다.
+  # 이름 없는 @Async 는 이 기본 실행기로 가고, job 은 jobExecutor 만 쓴다
+  task:
+    execution:
+      mode: force
+
+  # 메뉴판 사진(POST /onboarding/jobs/menu-photo) 상한은 서비스가 10MB 로 검사해 400 을 준다.
+  # 여기 값은 그보다 커야 한다 — 이 값을 넘으면 서블릿이 먼저 막는다
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      # 스키마는 Flyway만 바꾼다 (ADR-0004). JPA는 엔티티와 맞는지 검증만
+      ddl-auto: validate
+
+  batch:
+    job:
+      # 기동 때 등록된 Job 을 전부 돌리는 Boot 기본 동작을 끈다. 상품명 라벨 배치는 시세 적재 이벤트로만 기동한다 (ADR-0014)
+      enabled: false
+    jdbc:
+      # BATCH_* 메타 표는 Flyway V10 이 만든다 (스키마는 Flyway만, ADR-0004)
+      initialize-schema: never
+
+app:
+  cors:
+    # 쉼표로 구분
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:3000}
+  jwt:
+    # 서명 키 · 만료 시간은 코드에 두지 않는다 (ADR-0005). 키는 32바이트 미만이면 기동 실패
+    secret: ${JWT_SECRET:}
+    # Duration 형식 (30m · 14d). access 는 짧게 — 발급된 access token 은 만료 전까지 끊을 수 없다
+    access-ttl: ${JWT_ACCESS_TTL:30m}
+    refresh-ttl: ${JWT_REFRESH_TTL:14d}
+  job:
+    executor:
+      # 오래 걸리는 작업(온보딩 · 영수증)을 동시에 몇 개 돌릴지. 대기열은 100 고정
+      pool-size: ${JOB_EXECUTOR_POOL_SIZE:4}
+  apify:
+    # 네이버 플레이스 수집 (설계 1.1 · 2.2). 토큰이 비어 있어도 앱은 뜨고, 가게 검색 · 메뉴 수집만 503
+    token: ${APIFY_TOKEN:}
+    base-url: ${APIFY_BASE_URL:https://api.apify.com}
+    actor-id: zen-studio~naver-place-scraper
+    # run-sync 한 번을 기다리는 최대 시간 (Apify 상한 300초)
+    run-timeout: 240s
+    # 메뉴 수집 재시도 간격 (설계 2.2). 가게 검색은 재시도하지 않는다
+    retry-delays:
+      - 30s
+      - 2m
+  demo-account:
+    # 시연 계정 이메일 (ADR-0018). 이 이메일은 이미 가입돼 있어도 다시 가입된다 — 옛 계정은 이메일만 보관용으로 바뀌고 남는다. 비면 쓰지 않는다
+    email: ${DEMO_ACCOUNT_EMAIL:}
+    # 시연 계정의 가게가 보는 오늘 (ADR-0019). 날짜만 고정하고 시각은 실제 그대로다. 이메일이 비면 쓰지 않는다. 비우면 고정하지 않는다
+    today: ${DEMO_ACCOUNT_TODAY:2026-11-12}
+  demo-preparation:
+    # BE 워커가 classpath:demo-template/ 를 직접 적재한다. 끄면(false) 외부 demo_attach.py 워처가 대신 적재한다
+    auto-attach: ${DEMO_PREPARATION_AUTO_ATTACH:true}
+  onboarding-replay:
+    # 저장본(ADR-0016)으로 답할 때 실제 호출처럼 보이게 기다리는 시간. 저장본이 없는 요청은 기다리지 않는다. 0s 면 바로 답한다
+    search-delay: ${ONBOARDING_REPLAY_SEARCH_DELAY:4s}
+    analysis-delay: ${ONBOARDING_REPLAY_ANALYSIS_DELAY:15s}
+  llm:
+    # GMS(SSAFY 제공 LLM 창구, 지라 S15P31A308-93). 키 · 주소 · 모델이 비어 있어도 앱은 뜨고, 온보딩 분석만 LLM_UNAVAILABLE
+    key: ${GMS_KEY:}
+    # OpenAI 호환 주소. 뒤에 /chat/completions 를 붙인다
+    base-url: ${GMS_BASE_URL:}
+    model: ${GMS_MODEL:}
+    # 요청 한 번의 응답 대기 시간
+    timeout: 60s
+    # 429 · 5xx · 연결 실패 · 타임아웃 재시도 간격 (2번 더). 응답 JSON 이 깨졌으면 간격 없이 1번 더
+    retry-delays:
+      - 1s
+      - 3s
+  ocr:
+    clova:
+      # CLOVA General OCR (영수증 글자 인식, 지라 S15P31A308-111 · DECISIONS #32). 둘 중 하나라도 비면
+      # 가짜 글자 인식(FakeOcrClient — 정해진 영수증 글자)을 쓰고 기동 때 WARN 한 줄을 남긴다
+      url: ${CLOVA_OCR_URL:}
+      secret: ${CLOVA_OCR_SECRET:}
+      timeout: 60s
+      # 429 · 5xx · 연결 실패 · 타임아웃 재시도 간격 (2번 더)
+      retry-delays:
+        - 1s
+        - 3s
+      # 호출 사이 최소 간격 (설계 4.2 "CLOVA 권장 1 tps")
+      min-interval: 1s
+  receipt:
+    # 영수증 원본 저장소 (ADR-0013): file(서버 디스크, 기본) · s3(운영)
+    storage: ${RECEIPT_STORAGE:file}
+    # file: 원본을 두는 폴더 (설계 4.5 — 서버 디스크 /data 볼륨, DB 에는 이 폴더 기준 상대 경로만)
+    storage-dir: ${RECEIPT_STORAGE_DIR:./data/receipts}
+    s3:
+      # s3: 업로드 전용 버킷. s3 모드에서 비어 있으면 기동하지 않는다. 자격 · 리전은 AWS SDK 기본 체인(AWS_REGION)
+      bucket: ${RECEIPT_S3_BUCKET:}
+      # s3: S3 호환 저장소 주소. 비우면 AWS S3
+      endpoint: ${RECEIPT_S3_ENDPOINT:}
+    allow-fake-ocr: ${RECEIPT_ALLOW_FAKE_OCR:false} # CLOVA 키가 없을 때 가짜 인식으로 올리기 · 다시 읽기를 열지 (backend/.env.example)
+  market-label:
+    # 식자재몰 상품명 → 품목군 라벨 배치 (S15P31A308-229, ADR-0014). 시세 적재(MarketProductsImportedEvent)가 끝나면 Spring Batch Job 이 돈다
+    # 라벨 버전 = 프롬프트 · 품목군 표 · 모델 버전. 바꾸면 이전 버전 라벨이 붙은 상품명도 다시 분류한다 (ADR-0012)
+    version: ${MARKET_LABEL_VERSION:v2}
+    # LLM 한 요청에 넣는 상품명 수 = chunk 크기 (기준 문서 9절). 한 chunk 가 끝날 때마다 라벨을 커밋한다
+    batch-size: 40
+    # 한 번 실행에 분류할 상품명 상한. 0 이면 전부. 시험 실행 · 비용 확인용 (backend/.env.example)
+    limit: ${MARKET_LABEL_LIMIT:0}
+    # 동시에 보내는 LLM 요청 수. chunk = batch-size × threads 개를 한 커밋으로. 한 요청 약 30초라 1이면 후보 10만 개에 하루 넘게 걸린다
+    threads: ${MARKET_LABEL_THREADS:8}
+    # 라벨 표 CSV 백업 폴더 (서버 디스크, 영수증 원본과 같은 ./data 아래). chunk 커밋마다 labels_latest.csv 를 바꿔치기하고 단계 끝에 labels_<시각>.csv 사본.
+    # 열이 MARKET_LABELS_FILE 적재 형식과 같아 DB 를 새로 만들 때 그대로 다시 넣는다. 비우면 백업하지 않는다
+    backup-dir: ${MARKET_LABEL_BACKUP_DIR:./data/market-labels}
+  ingredient-category:
+    # 재료 카테고리 자동 분류 (S15P31A308-274): 재료가 생길 때 이름으로 백업 파일 → 재료표 · 품목군 표 매핑 → LLM(GMS_MODEL) → 기타 순으로 정한다
+    # LLM 한 요청을 기다리는 상한. 넘기면 그 묶음은 기타로 두고 재료 생성은 그대로 성공한다 (app.llm.timeout 과 별개 — 재료 생성 요청이 길어지지 않게 짧다)
+    llm-timeout: ${INGREDIENT_CATEGORY_LLM_TIMEOUT:20s}
+    # LLM 한 요청에 넣는 재료 이름 수 (온보딩 확정 · auto-assign 이 묶어 보낸다)
+    batch-size: 40
+    # 분류 결과 CSV 백업 폴더 (서버 디스크, ./data 아래). 자동 분류 · auto-assign 뒤 ingredient_categories_latest.csv 를 바꿔치기한다.
+    # 자동 분류 1단계가 이 파일을 먼저 보고, ai seed_sql.py 가 샘플 폴더의 같은 파일로 seed.sql 에 카테고리를 넣는다 — DB 를 새로 만들어도 LLM 을 다시 부르지 않는다. 비우면 백업 · 되살리기 안 함
+    backup-dir: ${INGREDIENT_CATEGORY_BACKUP_DIR:./data/ingredient-categories}
+  push:
+    # 마감 확인 웹 푸시 (S15P31A308-247 · 248, DECISIONS #88 · #95). 셋 중 하나라도 비면 앱은 뜨고 마감 알림만 건너뛴다(로그 1줄)
+    # VAPID 공개키(비압축 P-256 점, base64url) — FE NEXT_PUBLIC_VAPID_PUBLIC_KEY 와 같은 값
+    vapid-public-key: ${VAPID_PUBLIC_KEY:}
+    # VAPID 개인키(32바이트, base64url). 비밀값이라 기본값 없음
+    vapid-private-key: ${VAPID_PRIVATE_KEY:}
+    # 푸시 서비스가 연락할 주소 (mailto:팀 메일)
+    vapid-subject: ${VAPID_SUBJECT:}
+    # 마감 시각이 지났는지 보는 주기. Spring cron 6자리
+    closing-cron: ${PUSH_CLOSING_CRON:0 */5 * * * *}
+    # cron 의 시간대. 마감 시각 판단은 가게마다 store.timezone 으로 한다
+    closing-zone: ${PUSH_CLOSING_ZONE:Asia/Seoul}
+  recommendation:
+    # 추천 생성 배치 (설계 5절: ai-batch 03:00 뒤 04:00). Spring cron 6자리(초 분 시 일 월 요일)
+    cron: ${RECOMMENDATION_CRON:0 0 4 * * *}
+    # 배치 시각의 시간대. 가게마다 다른 시간대는 추천 생성일(run_date) 계산에만 쓴다
+    zone: ${RECOMMENDATION_ZONE:Asia/Seoul}
+  receiving:
+    auto:
+      # 도착 예정일 자동 입고 배치 (지라 S15P31A308-203). 보낸 발주의 예정일이 지난(전날까지) 줄을 주문 수량대로 입고 처리한다. Spring cron 6자리
+      cron: ${RECEIVING_AUTO_CRON:0 10 0 * * *}
+      # 배치 시각의 시간대. "오늘" 판단은 가게마다 store.timezone 으로 한다
+      zone: ${RECEIVING_AUTO_ZONE:Asia/Seoul}

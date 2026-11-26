@@ -1,0 +1,194 @@
+/* 시안 .msg (주문 메시지 시트 · DECISIONS #49) */
+/* 시안 app_all.html .msg: 바닥색 시트 위 흰 24px 블록 */
+.msg {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-control);
+  margin-bottom: var(--sp-row);
+  padding: var(--sp-button-x);
+  border-radius: var(--r-card);
+  background: var(--paper);
+}
+
+.isSent {
+  opacity: 0.6;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-control);
+}
+
+.head h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-gap);
+  font-size: var(--fs-title);
+  font-weight: 600;
+}
+
+.body {
+  white-space: pre-wrap;
+  padding: var(--sp-grid) var(--sp-chip-x);
+  border-radius: var(--r-panel);
+  background: var(--paper-2);
+  font-size: var(--fs-block);
+  line-height: 1.55;
+  user-select: text;
+}
+
+/* 쇼핑몰 묶음: 품목별 주문 링크 */
+.links {
+  display: grid;
+  gap: var(--sp-inline);
+  padding: var(--sp-grid) var(--sp-chip-x);
+  border-radius: var(--r-panel);
+  background: var(--paper-2);
+  font-size: var(--fs-block);
+}
+
+.links a {
+  color: var(--red-text);
+  font-weight: 600;
+}
+
+.links span {
+  color: var(--ink-3);
+}
+
+.isSent .body {
+  color: var(--ink-3);
+}
+
+.sum {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-control);
+  font-size: var(--fs-label);
+  color: var(--ink-2);
+}
+
+.isRed {
+  color: var(--red-text);
+  font-weight: 700;
+}
+
+.isOk {
+  color: var(--ok-text);
+  font-weight: 700;
+}
+
+.acts {
+  display: flex;
+  gap: var(--sp-gap);
+}
+
+.sent {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-hair);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--ok-text);
+  white-space: nowrap;
+}
+
+.ic {
+  flex: none;
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sent .ic {
+  width: var(--ic-row);
+  height: var(--ic-row);
+}
+
+/* 주문처 선택 (시안 .src-opts · .src) */
+.q {
+  font-size: var(--fs-num-m);
+}
+
+.q u {
+  margin-left: var(--sp-hair);
+  font-size: var(--fs-caption);
+  text-decoration: none;
+  color: var(--ink-3);
+}
+
+.srcOpts {
+  display: grid;
+  gap: var(--sp-inline);
+}
+
+.src {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--sp-hair) var(--sp-grid);
+  padding: var(--sp-grid) var(--sp-gutter);
+  border: 0;
+  border-radius: var(--r-row);
+  background: var(--ground);
+  text-align: left;
+  transition: background-color var(--dur-swap) var(--ease);
+}
+
+.srcName {
+  font-size: var(--fs-body);
+  font-weight: 500;
+}
+
+.src b {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: var(--fs-sheet-title);
+  font-weight: 500;
+}
+
+.src small {
+  grid-column: 1;
+  display: flex;
+  gap: var(--sp-inline);
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.src em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--red-text);
+}
+
+.src[aria-checked="true"] {
+  background: var(--dark);
+  color: var(--paper);
+}
+
+.src[aria-checked="true"] small {
+  color: var(--on-dark-2);
+}
+
+.src[aria-checked="true"] em {
+  color: var(--red-on-dark);
+}
+
+.src:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .src:not(:disabled):not([aria-checked="true"]):hover {
+    background: var(--paper-2);
+  }
+}

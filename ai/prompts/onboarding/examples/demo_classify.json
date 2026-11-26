@@ -1,0 +1,10 @@
+{
+  "items": [
+    {"name": "알리오 올리오 소스", "kind": "BOM", "unit": "ML", "storageType": "CHILLED", "perServing": 30, "confidence": 0.4, "shelfLifeDays": 7},
+    {"name": "들기름 소스", "kind": "BOM", "unit": "ML", "storageType": "AMBIENT", "perServing": 20, "confidence": 0.4, "shelfLifeDays": 14},
+    {"name": "토마토 라구 소스", "kind": "BOM", "unit": "G", "storageType": "CHILLED", "perServing": 120, "confidence": 0.4, "shelfLifeDays": 7},
+    {"name": "매콤 크림 소스", "kind": "BOM", "unit": "ML", "storageType": "CHILLED", "perServing": 100, "confidence": 0.4, "shelfLifeDays": 7},
+    {"name": "브레드 스틱", "kind": "BOM", "unit": "EA", "storageType": "FROZEN", "perServing": 1, "confidence": 0.7, "shelfLifeDays": 90},
+    {"name": "음료", "kind": "ONE_TO_ONE", "unit": "EA", "storageType": "AMBIENT", "perServing": 1, "confidence": 0.9, "shelfLifeDays": 365}
+  ]
+}

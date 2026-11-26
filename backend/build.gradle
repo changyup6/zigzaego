@@ -1,0 +1,108 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.diffplug.spotless' version '8.10.4'
+}
+
+group = 'com.zigzaego'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	// 로그 traceId · spanId만 쓴다. 스타터(spring-boot-starter-opentelemetry)는 OTLP 내보내기 모듈까지 가져와 대상이 없으면 접속 오류를 반복한다
+	implementation 'org.springframework.boot:spring-boot-micrometer-tracing-opentelemetry'
+	implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-flyway'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	// 식자재몰 상품명 라벨 배치 (ADR-0014). JobRepository 메타 표는 Flyway V10, 기동 때 자동 실행은 끈다(application.yaml)
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	implementation 'org.springframework.boot:spring-boot-batch-jdbc'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.1'
+	implementation 'org.apache.poi:poi-ooxml:5.5.1'
+	// 운영 영수증 원본 저장(ADR-0013). S3 만 쓴다.
+	// SDK 기본 HTTP 구현(Apache HttpClient 5 · Netty)을 빼고 JDK 기반 구현을 쓴다. httpclient5 가 classpath 에 있으면
+	// 요청 팩토리를 지정하지 않은 RestClient 가 HttpComponents 로 바뀌어 429 · 503 을 스스로 재시도한다.
+	implementation platform('software.amazon.awssdk:bom:2.56.0')
+	implementation('software.amazon.awssdk:s3') {
+		exclude group: 'software.amazon.awssdk', module: 'apache5-client'
+		exclude group: 'software.amazon.awssdk', module: 'apache-client'
+		exclude group: 'software.amazon.awssdk', module: 'netty-nio-client'
+	}
+	implementation 'software.amazon.awssdk:url-connection-client'
+	implementation 'io.jsonwebtoken:jjwt-api:0.13.0'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.13.0'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-flyway-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-batch-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
+	testImplementation 'org.testcontainers:testcontainers-postgresql'
+	testCompileOnly 'org.projectlombok:lombok'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+	// 재료 카테고리 백업 CSV(S15P31A308-274)를 테스트가 ./data 에 쓰지 않게 build/ 아래로
+	environment 'INGREDIENT_CATEGORY_BACKUP_DIR', 'build/test-data/ingredient-categories'
+	// backend/.env 에 GMS 키가 있어도 테스트는 실제 LLM 을 부르지 않는다 (CI 와 같은 조건). LLM 이 필요한 테스트는 GmsClient 를 @MockitoBean 으로 바꾼다
+	systemProperty 'app.llm.key', ''
+}
+
+tasks.named('bootBuildImage') {
+	// 커밋 SHA 태그가 바뀌어도 동일 Paketo 빌드/런치 레이어 캐시를 재사용한다.
+	pullPolicy = 'IF_NOT_PRESENT'
+	buildCache {
+		volume {
+			name = 'zigzaego-paketo-build'
+		}
+	}
+	launchCache {
+		volume {
+			name = 'zigzaego-paketo-launch'
+		}
+	}
+}
+
+// 포매터 (S15P31A308-315). 커밋 전 ./gradlew spotlessApply, 확인은 ./gradlew spotlessCheck.
+// 줄을 다시 감지 않는다 — Eclipse · palantir 포매터는 DTO record 의 '어노테이션 줄 → 타입 줄' 형식을 지키지 못한다.
+// 들여쓰기(탭) · 줄 길이(120)는 루트 .editorconfig 로 IDE 가 맞춘다.
+// 앞 공백 → 탭 변환은 넣지 않는다: SQL 텍스트 블록 안의 들여쓰기까지 바뀐다
+spotless {
+	java {
+		target 'src/**/*.java'
+		// static import 먼저, 그다음 나머지 전부 알파벳순 (지금 관례)
+		importOrder('\\#', '')
+		removeUnusedImports()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+}

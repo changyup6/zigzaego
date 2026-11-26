@@ -1,0 +1,23 @@
+.file {
+  position: relative;
+  cursor: pointer;
+}
+
+.file input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.file:focus-within {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.file:has(input:disabled) {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}

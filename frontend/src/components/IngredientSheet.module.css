@@ -1,0 +1,26 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-row);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: var(--sp-inline);
+  column-gap: var(--sp-gutter);
+  font-size: var(--fs-label);
+}
+
+.facts dt {
+  color: var(--ink-3);
+}
+
+.facts dd {
+  text-align: right;
+  font-weight: 600;
+}
+
+.facts dd.red {
+  color: var(--red-text);
+}

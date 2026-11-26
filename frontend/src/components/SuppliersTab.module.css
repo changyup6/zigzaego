@@ -1,0 +1,159 @@
+/* 시안 stock_v3.html 거래처: 가게 그림 줄 */
+.street {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--shop-min), 1fr));
+  gap: var(--sp-block) var(--sp-card-x);
+  align-items: start;
+}
+
+.shop {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: center;
+  transition: transform 180ms var(--ease);
+}
+
+.shop:active {
+  transform: scale(0.97);
+}
+
+.front {
+  position: relative;
+  display: block;
+  transition: transform 240ms var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .shop:hover .front {
+    transform: translateY(calc(-1 * var(--sp-tight))) rotate(-1deg);
+  }
+}
+
+.art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.art * {
+  fill: var(--paper);
+  stroke: var(--red);
+  stroke-width: var(--art-line);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art .fill {
+  fill: var(--red);
+}
+
+.art .open {
+  fill: none;
+}
+
+.art .thin {
+  stroke-width: var(--art-line-thin);
+}
+
+/* 간판 글자: SVG 간판 자리 (x 30~180, y 62~104 / 240×224) */
+.sign {
+  position: absolute;
+  top: 27.7%;
+  left: 12.5%;
+  display: grid;
+  place-items: center;
+  width: 62.5%;
+  height: 18.8%;
+  padding: 0 var(--sp-gap);
+  overflow: hidden;
+  font-family: var(--hand);
+  font-size: var(--fs-hand);
+  letter-spacing: -0.02em;
+  color: var(--red);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--sp-gap);
+  justify-content: center;
+  margin-top: var(--sp-gap);
+  font-size: var(--fs-label);
+  color: var(--ink-3);
+}
+
+.meta span + span::before {
+  content: "·";
+  margin-right: var(--sp-gap);
+}
+
+/* 거래처 추가: 회색 점선 가게 + 가운데 + */
+.add .art * {
+  fill: var(--paper);
+  stroke: var(--ink-5);
+  stroke-dasharray: 7 7;
+}
+
+.add .sign {
+  color: var(--ink-3);
+}
+
+.plus {
+  position: absolute;
+  top: 76%;
+  left: 44%;
+  display: grid;
+  place-items: center;
+  width: var(--control-h);
+  height: var(--control-h);
+  border: var(--art-line-thin) solid var(--ink-4);
+  border-radius: var(--r-circle);
+  background: var(--paper);
+  transform: translate(-50%, -50%);
+}
+
+.plus svg {
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+@media (max-width: 760px) {
+  .street {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-card-x) var(--sp-grid);
+  }
+
+  .sign {
+    font-size: var(--fs-hand-s);
+  }
+
+  .meta {
+    gap: 0 var(--sp-inline);
+    font-size: var(--fs-caption);
+  }
+
+  .meta span + span::before {
+    margin-right: var(--sp-inline);
+  }
+
+  /* 폰: 배송 요일은 줄을 바꿔 따로 (14px 에서 한 줄에 안 들어가 '·' 로 시작하는 줄이 생긴다) */
+  .meta .days {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+  .meta .days::before {
+    content: none;
+  }
+}

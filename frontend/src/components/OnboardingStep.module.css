@@ -1,0 +1,24 @@
+/* 제목 쪽으로 당긴다 (Screen 머리줄 아래 여백 12px 중 4px만 남김) */
+.bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--sp-inline);
+  margin-top: -8px;
+}
+
+.bar span {
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--rule);
+  transition: background-color 240ms var(--ease);
+}
+
+.bar .done {
+  background: var(--step-done);
+}
+
+@media (max-width: 760px) {
+  .bar {
+    margin-top: -6px;
+  }
+}

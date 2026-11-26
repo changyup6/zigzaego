@@ -1,0 +1,156 @@
+/* 마감 확인 (DECISIONS #88). 줄은 재료 이름 왼쪽, 수량 · 사유 · 삭제 오른쪽 */
+.list {
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-gap) var(--sp-gutter);
+  min-height: var(--row-min-h);
+  padding: var(--sp-control) 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.row:first-child {
+  border-top: 0;
+}
+
+.name {
+  flex: 1 1 96px;
+  min-width: 0;
+  font-size: var(--fs-title);
+  font-weight: 600;
+}
+
+/* 포장 수를 기준 단위로 바꾼 양 (1.5망 → 1.5kg) */
+.sub {
+  margin-left: var(--sp-gap);
+  font-family: var(--numeral);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  color: var(--ink-3);
+}
+
+.tail {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-control);
+  margin-left: auto;
+}
+
+/* 숫자 칸 + 단위 (Inputs: 44px, 14px 모서리, 흰 바탕) */
+.qty {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-inline);
+  font-size: var(--fs-label);
+  color: var(--ink-3);
+}
+
+.qty input,
+.pick,
+.reason,
+.say textarea {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background-color: var(--paper);
+}
+
+.qty input {
+  width: 96px;
+  height: var(--control-h);
+  padding: 0 var(--sp-grid);
+  color: var(--ink);
+  text-align: right;
+}
+
+.qty input:focus,
+.pick:focus,
+.reason:focus,
+.say textarea:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.qty input::placeholder,
+.say textarea::placeholder {
+  color: var(--ink-5);
+}
+
+/* 확인이 필요한 값: 빨간 테두리 + red-tint */
+.need input,
+select.need {
+  border-color: var(--red);
+  background-color: var(--red-tint);
+}
+
+.pick,
+.reason {
+  height: var(--control-h);
+  padding: 0 var(--sp-grid);
+}
+
+.pick {
+  flex: 1 1 96px;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.reason {
+  border-radius: var(--r-pill);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.del {
+  display: grid;
+  place-items: center;
+  width: var(--control-h);
+  height: var(--control-h);
+  margin-right: calc(var(--sp-control) * -1);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-circle);
+  background: none;
+  color: var(--ink-3);
+}
+
+.del svg {
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+}
+
+.say {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-control);
+  padding-bottom: var(--sp-gap);
+}
+
+.say textarea {
+  flex: 1;
+  min-width: 0;
+  padding: var(--sp-control) var(--sp-grid);
+  resize: none;
+  font: inherit;
+  line-height: 1.5;
+}
+
+.error {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--red-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .del:hover {
+    background: var(--paper-2);
+  }
+}

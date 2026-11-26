@@ -1,0 +1,372 @@
+/* 확인 필요 데모. 값은 시안 weglee_3.html 의 .line · .match · .ing-line · .table · .sel · .qty-in 그대로 */
+
+.ic {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.empty {
+  padding: var(--sp-gap) 0 var(--sp-tight);
+  color: var(--ink-2);
+}
+
+.sub {
+  color: var(--ink-3);
+  font-size: var(--fs-label);
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.dim {
+  color: var(--ink-3);
+}
+
+/* 입력 · 셀렉트 */
+.sel {
+  height: var(--control-h);
+  min-width: 0;
+  padding-left: var(--sp-grid);
+  padding-right: 36px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background-color: var(--paper);
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7684' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-grid) center;
+}
+
+.qtyIn {
+  width: var(--stepper-val-w);
+  height: var(--control-h);
+  padding: 0 var(--sp-control);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background: var(--paper);
+  text-align: right;
+  appearance: textfield;
+}
+
+.qtyIn::-webkit-outer-spin-button,
+.qtyIn::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+select.sel:focus,
+input.qtyIn:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+/* 줄 (시안 .line) */
+.line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "a b" "c d";
+  column-gap: var(--sp-grid);
+  row-gap: 3px;
+  align-items: end;
+  padding: var(--sp-grid) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.line:last-child {
+  border-bottom: 0;
+}
+
+.a {
+  grid-area: a;
+  min-width: 0;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.b {
+  grid-area: b;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.c {
+  grid-area: c;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-hair) var(--sp-control);
+  min-width: 0;
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.d {
+  grid-area: d;
+  text-align: right;
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ok {
+  color: var(--ok-text);
+}
+
+.e {
+  grid-area: e;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-gap);
+}
+
+.wide {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "a b e" "c d e";
+  align-items: center;
+}
+
+.tight {
+  padding: 9px 0;
+}
+
+.tight .a {
+  font-size: var(--fs-block);
+}
+
+/* 레시피: 메뉴 머리 */
+.menuHd {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-row);
+  padding-bottom: var(--sp-grid);
+}
+
+.menuHd h2 {
+  font-size: var(--fs-sheet-title);
+}
+
+.thumb {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: var(--r-input);
+  background: var(--paper-2);
+  color: var(--ink-3);
+}
+
+.thumbIc {
+  composes: ic;
+  width: 32px;
+  height: 32px;
+}
+
+/* 입고: 확인 목록 (시안 .match) */
+.match {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--sp-gap) var(--sp-grid);
+  align-items: center;
+  padding: var(--sp-grid) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.match:last-child {
+  border-bottom: 0;
+}
+
+.matchName {
+  min-width: 0;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.matchName small {
+  display: block;
+  margin-top: var(--sp-hair);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+  color: var(--ink-3);
+}
+
+.matchCtl {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-gap);
+}
+
+.matchCtl .sel {
+  flex: 1 1 180px;
+}
+
+.matchUnit {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-inline);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* 거래처 및 재료: 폰은 줄 목록, 데스크톱은 표 (시안 .ing-line · .ing-table) */
+.ingLine {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 16px;
+  grid-template-areas: "a b g" "c c g";
+  column-gap: var(--sp-grid);
+  row-gap: 3px;
+  align-items: center;
+  width: 100%;
+  padding: var(--sp-grid) 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule-soft);
+  background: none;
+  color: var(--ink);
+  text-align: left;
+}
+
+.ingLine:last-child {
+  border-bottom: 0;
+}
+
+.ingA {
+  grid-area: a;
+  min-width: 0;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.ingB {
+  grid-area: b;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ingC {
+  grid-area: c;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-hair) var(--sp-control);
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.chev {
+  composes: ic;
+  grid-area: g;
+  width: 16px;
+  height: 16px;
+  color: var(--ink-3);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-label);
+}
+
+.table th {
+  padding: var(--sp-inline) var(--sp-gutter) var(--sp-gap) 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--ink-3);
+  text-align: left;
+}
+
+.table td {
+  padding: 9px var(--sp-gutter) 9px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: 0;
+}
+
+.table th:last-child,
+.table td:last-child {
+  padding-right: 0;
+}
+
+.table .r {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.product {
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ingTable {
+  display: none;
+}
+
+/* 더보기: 메뉴 연결 */
+.mapWrap {
+  margin-bottom: var(--sp-tight);
+  padding-bottom: var(--sp-tight);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.subHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-grid);
+  padding: var(--sp-tight) 0 var(--sp-gap);
+}
+
+.subHead h2 {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.subHead h2 :global(.num) {
+  margin-left: 4px;
+  font-size: var(--n14);
+  color: var(--ink);
+}
+
+@media (max-width: 899px) {
+  .map {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "a b" "c d" "e e";
+  }
+
+  .map .e {
+    margin-top: var(--sp-inline);
+  }
+
+  .map .sel {
+    width: 100%;
+  }
+}
+
+@media (min-width: 900px) {
+  .ingLines {
+    display: none;
+  }
+
+  .ingTable {
+    display: table;
+  }
+}

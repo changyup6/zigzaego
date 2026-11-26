@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "properties": {
+    "analysis": {"type": "string"}
+  },
+  "required": ["analysis"],
+  "additionalProperties": false
+}

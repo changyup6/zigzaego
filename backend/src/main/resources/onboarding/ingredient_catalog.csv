@@ -1,0 +1,77 @@
+name,aliases,kind,unit,storage_type,per_serving,confidence,shelf_life_days
+파스타면,스파게티면;스파게티;펜네;링귀니;파스타 건면,BOM,G,AMBIENT,100,0.5,365
+소면,소면 사리;국수,BOM,G,AMBIENT,100,0.6,365
+우동면,우동 사리;우동 생면,BOM,G,CHILLED,200,0.6,30
+중화면,짜장면 면;짬뽕면,BOM,G,CHILLED,200,0.5,7
+라면 사리,라면사리,BOM,EA,AMBIENT,1,0.8,180
+떡볶이 떡,밀떡;쌀떡;떡볶이떡,BOM,G,CHILLED,150,0.5,7
+쌀,공기밥;백미;흰쌀밥,BOM,G,AMBIENT,100,0.6,180
+식빵,식빵 슬라이스,BOM,EA,AMBIENT,2,0.6,3
+햄버거 번,버거 번;햄버거빵,BOM,EA,AMBIENT,1,0.9,3
+또띠아,토르티야;또르띠야,BOM,EA,FROZEN,1,0.8,180
+불고기,소불고기;불고기용 소고기,BOM,G,CHILLED,120,0.5,3
+소고기,쇠고기;우둔;홍두깨,BOM,G,CHILLED,120,0.5,3
+다진 소고기,소고기 다짐육;간 소고기,BOM,G,CHILLED,100,0.5,3
+돼지고기,돼지 앞다리살;돼지 목살;제육,BOM,G,CHILLED,150,0.5,3
+삼겹살,통삼겹,BOM,G,CHILLED,150,0.5,3
+닭고기,치킨;닭다리살;닭정육;로스트 치킨,BOM,G,CHILLED,120,0.5,3
+닭가슴살,닭가슴살 슬라이스,BOM,G,CHILLED,100,0.6,3
+돈까스 패티,돈가스;돈까스,BOM,EA,FROZEN,1,0.8,180
+햄버거 패티,소고기 패티;버거 패티,BOM,EA,FROZEN,1,0.8,180
+새우,칵테일새우;흰다리새우;깐새우;생새우,BOM,EA,FROZEN,5,0.5,180
+오징어,손질 오징어,BOM,G,FROZEN,80,0.5,180
+어묵,오뎅;사각어묵,BOM,G,CHILLED,80,0.6,14
+베이컨,베이컨 슬라이스,BOM,G,CHILLED,30,0.6,14
+슬라이스 햄,샌드위치 햄;햄 슬라이스,BOM,G,CHILLED,30,0.7,14
+소시지,비엔나 소시지;소세지,BOM,EA,CHILLED,2,0.6,21
+통조림 햄,스팸;런천미트,BOM,G,AMBIENT,50,0.7,365
+참치 통조림,참치캔;참치,BOM,G,AMBIENT,50,0.7,365
+두부,부침두부;찌개두부,BOM,G,CHILLED,100,0.7,7
+계란,달걀;계란 프라이;반숙란,BOM,EA,CHILLED,1,0.8,21
+우유,흰우유,BOM,ML,CHILLED,100,0.6,7
+생크림,휘핑크림;동물성 크림,BOM,ML,CHILLED,50,0.6,10
+버터,무염버터,BOM,G,CHILLED,10,0.8,30
+치즈,모짜렐라 치즈;모짜렐라;피자 치즈,BOM,G,CHILLED,30,0.6,30
+슬라이스 치즈,체다 슬라이스;치즈 슬라이스,BOM,EA,CHILLED,1,0.8,30
+파르메산 치즈,파마산 치즈;파르메산;파마산;그라나 파다노,BOM,G,CHILLED,5,0.8,30
+양파,적양파,BOM,G,FRESH,50,0.7,7
+대파,쪽파;실파,BOM,G,FRESH,10,0.8,5
+마늘,다진 마늘;깐마늘;편마늘,BOM,G,FRESH,10,0.8,7
+양배추,적양배추,BOM,G,FRESH,50,0.7,7
+양상추,로메인,BOM,G,FRESH,30,0.7,3
+당근,채 썬 당근,BOM,G,FRESH,20,0.8,7
+감자,깍둑 감자,BOM,G,FRESH,80,0.7,7
+애호박,주키니,BOM,G,FRESH,40,0.8,5
+양송이버섯,양송이,BOM,G,FRESH,30,0.7,3
+브로콜리,브로콜리 송이,BOM,G,FRESH,30,0.7,4
+방울토마토,체리토마토,BOM,EA,FRESH,3,0.7,5
+토마토,완숙 토마토,BOM,G,FRESH,50,0.7,5
+청양고추,풋고추,BOM,G,FRESH,5,0.8,5
+깻잎,들깻잎,BOM,G,FRESH,5,0.8,3
+시금치,섬초,BOM,G,FRESH,30,0.8,3
+콩나물,콩나물 사리,BOM,G,FRESH,50,0.7,3
+김치,배추김치;포기김치,BOM,G,CHILLED,80,0.6,30
+단무지,치킨무,BOM,G,CHILLED,30,0.8,30
+고추장,태양초 고추장,BOM,G,AMBIENT,20,0.7,180
+된장,재래된장,BOM,G,AMBIENT,20,0.7,180
+간장,진간장;양조간장,BOM,ML,AMBIENT,15,0.8,365
+고춧가루,고추가루,BOM,G,AMBIENT,5,0.8,180
+설탕,백설탕,BOM,G,AMBIENT,5,0.8,365
+소금,꽃소금;천일염,BOM,G,AMBIENT,2,0.9,365
+후추,후춧가루;흑후추,BOM,G,AMBIENT,1,0.9,365
+식용유,카놀라유;콩기름;튀김기름,BOM,ML,AMBIENT,15,0.7,365
+올리브유,올리브 오일;엑스트라버진 올리브유,BOM,ML,AMBIENT,15,0.7,365
+참기름,순참기름,BOM,ML,AMBIENT,5,0.8,180
+들기름,생들기름,BOM,ML,AMBIENT,5,0.8,90
+밀가루,중력분;박력분,BOM,G,AMBIENT,30,0.7,180
+빵가루,습식 빵가루,BOM,G,AMBIENT,20,0.8,180
+튀김가루,부침가루,BOM,G,AMBIENT,30,0.7,180
+케첩,토마토 케첩,BOM,G,AMBIENT,15,0.8,180
+마요네즈,마요,BOM,G,AMBIENT,15,0.8,180
+토마토 소스,토마토소스;마리나라 소스,BOM,G,AMBIENT,120,0.6,365
+크림 소스,크림소스;화이트 소스,BOM,ML,CHILLED,100,0.6,14
+까르보나라 소스,카르보나라 소스,BOM,ML,CHILLED,100,0.6,14
+콜라,코카콜라;펩시;제로콜라;coca-cola,ONE_TO_ONE,EA,AMBIENT,1,0.95,365
+사이다,칠성사이다;스프라이트,ONE_TO_ONE,EA,AMBIENT,1,0.95,365
+생수,먹는샘물;병생수,ONE_TO_ONE,EA,AMBIENT,1,0.95,365
+캔맥주,맥주,ONE_TO_ONE,EA,CHILLED,1,0.9,365

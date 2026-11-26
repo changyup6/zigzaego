@@ -1,0 +1,11 @@
+/* 시안 .nav a .dot: 빨간 알약 숫자 */
+.badge {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 var(--sp-inline);
+  border-radius: var(--r-pill);
+  background: var(--red);
+  color: var(--on-red);
+  font: 500 var(--fs-caption) / 22px var(--numeral);
+  text-align: center;
+}

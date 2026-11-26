@@ -1,0 +1,15 @@
+# 로컬 개발용. bootRun 하면 Spring Boot가 자동으로 띄우고 접속 정보를 연결한다.
+# 값은 같은 폴더의 .env 에서 읽는다 (cp .env.example .env)
+services:
+  postgres:
+    image: 'postgres:18'
+    environment:
+      - 'POSTGRES_DB=${DB_NAME:-zigzaego}'
+      - 'POSTGRES_USER=${DB_USERNAME:-zigzaego}'
+      - 'POSTGRES_PASSWORD=${DB_PASSWORD:?backend/.env 에 DB_PASSWORD 를 채우세요 (.env.example 참조)}'
+    ports:
+      - '5432'
+  redis:
+    image: 'redis:8'
+    ports:
+      - '6379'

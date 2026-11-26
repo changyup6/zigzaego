@@ -1,0 +1,14 @@
+# 운영자용 온보딩 저장본 지우기 (S15P31A308-321). 실행법은 backend/README.md "온보딩 저장본"
+# 웹 서버를 띄우지 않고 OnboardingReplayDeleteRunner 만 돌린 뒤 끝난다
+spring:
+  main:
+    web-application-type: none
+  docker:
+    compose:
+      # bootRun 이 끝날 때 로컬 Postgres · Redis 컨테이너를 내리지 않는다 (서버를 같이 띄워 둔 경우)
+      lifecycle-management: start-only
+
+app:
+  onboarding-replay:
+    # 지울 검색어. 비우면 실행이 멈춘다
+    query: ${ONBOARDING_REPLAY_QUERY:}

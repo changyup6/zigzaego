@@ -1,0 +1,71 @@
+[project]
+name = "weglee-ai"
+version = "0.1.0"
+description = "위글리 수요 예측 실험 — 요일 평균 베이스라인 vs ML 비교 (WAPE)"
+requires-python = "==3.11.*"
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "lightgbm>=4.5",
+    # 식자재몰 데이터셋(Parquet) 조회 · 품목군 라벨 배치(S15P31A308-228 · 229). 가벼워서 기본 의존성에 둔다(CI 의 uv sync 에 포함)
+    "duckdb>=1.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ipykernel>=6.29",
+    "jupyterlab>=4.6.4",
+    "openpyxl>=3.1.5",
+    "ruff>=0.9",
+]
+# 야간 예측 배치(S15P31A308-105). 무거워서(torch) 기본 설치에서 뺀다: uv sync --group batch
+# 검색 방식 비교(S15P31A308-228)의 형태소 방식(compare_search.py morph)에만 쓰는 Kiwi. 무거워서 기본 설치에서 뺀다: uv sync --group market
+market = [
+    "kiwipiepy>=0.24.1",
+]
+# 상권 유동인구 · 행사 예측(weglee_ai.seoulevent, S15P31A308-226): 수집 · 데이터 만들기 · 학습 · 추론. uv sync --group event
+event = [
+    "holidays>=0.107",
+    "httpx>=0.28.1",
+    "openpyxl>=3.1.5",
+    "pyarrow>=21.0",
+    "pyproj>=3.7.2",
+    "python-dotenv>=1.0",
+    "scikit-learn>=1.7",
+    "xgboost>=2.1",
+]
+batch = [
+    "timesfm[torch]>=3.0.2",
+    # timesfm 이 끌고 오는 torch 를 CPU 인덱스로 고정하려고 직접 적는다 (tool.uv.sources 는 직접 의존성에만 적용)
+    "torch>=2.4",
+    "psycopg[binary]>=3.2",
+    "testcontainers[postgres]>=4.8",
+]
+
+# torch 는 CPU 휠만 받는다. 기본 PyPI 리눅스 휠은 CUDA 를 포함해 수 GB 다 (설계 5.2: CPU 추론)
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[build-system]
+requires = ["uv_build>=0.8,<0.13"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 160
+target-version = "py311"
+# 상권 예측 코드는 foodspring-crawler 원본을 그대로 옮겨 쓰는 로컬 실행 코드다 — 원본과 같게 두려고 검사에서 뺀다
+# shortcut: 원본 스타일(긴 줄 · zip strict 없음)이라 107건, 위글리에서 직접 고치기 시작하면 제외를 지우고 정리한다
+extend-exclude = ["src/weglee_ai/seoulevent", "tests/seoulevent"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

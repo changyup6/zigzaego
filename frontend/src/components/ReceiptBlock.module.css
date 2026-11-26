@@ -1,0 +1,407 @@
+/* 시안 weglee_3.html .rc-line · .rc-thumb · .rc-st · .match */
+.ic {
+  width: var(--ic-row);
+  height: var(--ic-row);
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 머리줄: 제목 + 같은 높이 오른쪽 위 올리기 */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-gutter);
+  padding-bottom: var(--sp-gap);
+}
+
+/* Card 머리 제목과 같은 모양 */
+.title {
+  font-size: var(--fs-card-title);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.item {
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+.rc {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-grid);
+  padding: var(--sp-control) 0;
+}
+
+/* 줄 머리: 누르면 품목이 펼쳐진다 */
+.head {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--sp-grid);
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+.head:disabled {
+  cursor: default;
+}
+
+.thumb {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--thumb-sm);
+  height: var(--thumb-sm);
+  border-radius: var(--r-input);
+  background: var(--paper-2);
+  color: var(--ink-3);
+}
+
+.thumb .ic {
+  width: var(--ic-thumb);
+  height: var(--ic-thumb);
+}
+
+.name {
+  min-width: 0;
+  font-size: var(--fs-block);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.chev {
+  flex: none;
+  width: var(--ic-row);
+  height: var(--ic-row);
+  fill: none;
+  stroke: var(--ink-4);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: transform 220ms var(--ease);
+}
+
+.up {
+  transform: rotate(180deg);
+}
+
+.st {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--sp-inline);
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.st > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-tight);
+}
+
+.read {
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+.done {
+  color: var(--ok-text);
+}
+
+.fail {
+  color: var(--red-text);
+}
+
+/* 펼침: grid-rows 0fr → 1fr */
+.fold {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 240ms var(--ease);
+}
+
+.fold > div {
+  overflow: hidden;
+}
+
+.open {
+  grid-template-rows: 1fr;
+}
+
+.lines {
+  margin: 0 0 var(--sp-control) calc(var(--thumb-sm) + var(--sp-grid));
+  padding: 0;
+  list-style: none;
+}
+
+.lines li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--sp-grid);
+  padding: var(--sp-inline) 0;
+  border-top: 1px solid var(--rule-soft);
+  font-size: var(--fs-label);
+  color: var(--ink-2);
+}
+
+.lines li span:not(:first-child) {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.none {
+  color: var(--ink-3);
+}
+
+/* 확정 전이 남았을 때 모달을 다시 여는 줄 */
+.left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-grid);
+  padding: var(--sp-control) var(--sp-grid);
+  margin-bottom: var(--sp-gap);
+  border-radius: var(--r-input);
+  background: var(--red-tint);
+  font-size: var(--fs-block);
+  font-weight: 600;
+  color: var(--red-text);
+}
+
+/* 모달: 읽는 중 스피너 · 확인 목록 · 확정 */
+.reading {
+  display: grid;
+  place-items: center;
+  padding: var(--sp-block) 0;
+  border-radius: var(--r-widget);
+  background: var(--paper);
+}
+
+.success {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-inline);
+  margin-bottom: var(--sp-row);
+  color: var(--ok-text);
+  font-size: var(--fs-block);
+  font-weight: 600;
+}
+
+.spin svg {
+  display: block;
+  width: var(--spin-w);
+  height: auto;
+  overflow: visible;
+}
+
+.paper {
+  fill: var(--paper);
+  stroke: var(--ink-5);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.txt {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+
+/* 돋보기: 첫 줄 왼→오, 한 줄 내려 왼→오, 셋째 줄 왼→오 (사람이 읽는 순서) */
+.lens {
+  animation: read 2.7s linear infinite;
+}
+
+.lens circle {
+  fill: var(--glass);
+  stroke: var(--red);
+  stroke-width: 5px;
+}
+
+.lens path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 6px;
+  stroke-linecap: round;
+}
+
+@keyframes read {
+  0% {
+    transform: translate(30px, 36px);
+  }
+  27% {
+    transform: translate(90px, 36px);
+  }
+  33% {
+    transform: translate(30px, 64px);
+  }
+  60% {
+    transform: translate(90px, 64px);
+  }
+  66% {
+    transform: translate(30px, 92px);
+  }
+  93% {
+    transform: translate(70px, 92px);
+  }
+  100% {
+    transform: translate(30px, 36px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lens {
+    animation: none;
+    transform: translate(60px, 64px);
+  }
+
+  .fold,
+  .chev {
+    transition: none;
+  }
+}
+
+.blk {
+  padding: 0 var(--sp-card-x);
+  border-radius: var(--r-widget);
+  background: var(--paper);
+}
+
+.failRow,
+.ready li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-grid);
+  padding: var(--sp-grid) var(--sp-card-x);
+  border-radius: var(--r-widget);
+  background: var(--paper);
+  font-size: var(--fs-block);
+}
+
+.ready {
+  display: grid;
+  gap: var(--sp-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ready li > span:last-child {
+  color: var(--ink-3);
+}
+
+.acts {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.match {
+  display: grid;
+  gap: var(--sp-gap) var(--sp-grid);
+  padding: var(--sp-grid) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.match:last-child {
+  border-bottom: 0;
+}
+
+.matchName {
+  min-width: 0;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.matchName small {
+  display: block;
+  margin-top: var(--sp-hair);
+  font-size: var(--fs-caption);
+  font-weight: 400;
+  color: var(--ink-3);
+}
+
+.matchCtl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-gap);
+}
+
+.sel {
+  flex: 1 1 180px;
+  min-width: 0;
+  height: var(--control-h);
+  padding: 0 var(--sel-pad-r) 0 var(--sp-grid);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background-color: var(--paper);
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7684' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-grid) center;
+}
+
+.unit {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-inline);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.qtyIn {
+  width: var(--stepper-val-w);
+  height: var(--control-h);
+  padding: 0 var(--sp-control);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-input);
+  background: var(--paper);
+  text-align: right;
+  appearance: textfield;
+}
+
+.qtyIn::-webkit-outer-spin-button,
+.qtyIn::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.sel:focus,
+.qtyIn:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.empty {
+  padding: var(--sp-gap) 0 var(--sp-tight);
+  color: var(--ink-2);
+}
+
+/* 온보딩 지난 영수증 단계의 완료 줄 */
+.end {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-gap) 0;
+}
+
+.grow {
+  flex: 1;
+}

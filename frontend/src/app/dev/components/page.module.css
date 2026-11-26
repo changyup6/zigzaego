@@ -1,0 +1,35 @@
+.page {
+  display: grid;
+  gap: var(--sp-block);
+  max-width: 760px;
+  margin-inline: auto;
+  padding: var(--sp-screen-top) var(--sp-gutter) 160px;
+}
+
+.block {
+  display: grid;
+  gap: var(--sp-grid);
+  justify-items: start;
+}
+
+.block > h2 {
+  width: 100%;
+  padding-bottom: var(--sp-gap);
+  border-bottom: 2px solid var(--rule);
+  font-size: var(--fs-title);
+}
+
+.block > div[role="progressbar"] {
+  width: 100%;
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-gap);
+}
+
+.wide {
+  width: 100%;
+}

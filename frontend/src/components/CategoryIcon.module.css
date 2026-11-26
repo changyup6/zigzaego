@@ -1,0 +1,28 @@
+/* 재료 카테고리 아이콘: 거래처 가게 그림(.art)과 같은 선 */
+.ic {
+  flex: none;
+  width: var(--ic-cat);
+  height: var(--ic-cat);
+  overflow: visible;
+  vertical-align: middle;
+}
+
+.ic * {
+  fill: var(--paper);
+  stroke: var(--red);
+  stroke-width: var(--art-line);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ic .fill {
+  fill: var(--red);
+}
+
+.ic .open {
+  fill: none;
+}
+
+.ic .thin {
+  stroke-width: var(--art-line-thin);
+}

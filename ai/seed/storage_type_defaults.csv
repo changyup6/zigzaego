@@ -1,0 +1,5 @@
+storage_type,shelf_life_days,service_level,z,price_sensitive
+FROZEN,90,0.97,1.88,true
+AMBIENT,180,0.97,1.88,true
+CHILLED,7,0.95,1.65,false
+FRESH,3,0.90,1.28,false

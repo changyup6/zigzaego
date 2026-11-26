@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "description": "입력 영수증 줄마다 재료표 재료 · 새 주기형 여부 · 포장 1개 환산 · 확신도 · 근거. 입력 줄 하나에 items 항목 하나.",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "type": "integer",
+            "description": "입력 줄 번호 그대로 (1부터)"
+          },
+          "ingredient": {
+            "type": ["string", "null"],
+            "description": "재료표 name 그대로. 맞는 재료가 없으면 null"
+          },
+          "is_new_periodic": {
+            "type": "boolean",
+            "description": "ingredient 가 null 이고 음식점이 주기적으로 다시 사는 물건이면 true"
+          },
+          "pack": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "qty": {
+                    "type": "number",
+                    "description": "수량 1개(포장 1개)의 양. 양수"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "enum": ["g", "ml", "ea"],
+                    "description": "재료표 재료의 기준 단위"
+                  }
+                },
+                "required": ["qty", "unit"],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "description": "0 ~ 1"
+          },
+          "reason": {
+            "type": "string",
+            "description": "판단 근거 한 구절"
+          }
+        },
+        "required": ["line", "ingredient", "is_new_periodic", "pack", "confidence", "reason"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["items"],
+  "additionalProperties": false
+}

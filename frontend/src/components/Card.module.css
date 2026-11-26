@@ -1,0 +1,53 @@
+/* 시안 .card: 반투명 유리 카드 30px */
+.card {
+  min-width: 0;
+  padding: var(--sp-card-y) var(--sp-card-x);
+  border-radius: var(--r-card);
+  background: var(--glass);
+  backdrop-filter: var(--blur-glass);
+  --chip-bg: var(--paper-2);
+}
+
+/* 시안 .card-h: 18px 얇은 제목 */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-control);
+  min-height: 34px;
+  padding-bottom: var(--sp-gap);
+}
+
+.head h2 {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-gap);
+  font-size: var(--fs-card-title);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* 소제목 옆 숫자는 확인 필요 개수만 (DESIGN.md) */
+.head h2 :global(.num) {
+  font-size: var(--n18);
+  color: var(--red);
+}
+
+/* 접히는 카드: <details className={card}> + <summary className={head}> */
+details.card > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+details.card > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.card > summary.head {
+  padding-bottom: 0;
+}
+
+details.card[open] > summary.head {
+  padding-bottom: var(--sp-gap);
+}

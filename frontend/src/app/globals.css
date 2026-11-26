@@ -1,0 +1,155 @@
+/* 전역 기본값. 시안(docs/design/prototype/app_all.html)의 base 규칙을 그대로 옮겼다.
+   토큰은 src/styles/tokens.css 에서만 정의한다. */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  background-image:
+    radial-gradient(1100px 680px at 100% 0%, var(--glow), transparent 62%),
+    radial-gradient(900px 600px at 0% 100%, var(--paper), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100dvh;
+  color: var(--ink);
+  caret-color: var(--red);
+  font: 400 var(--fs-body) / 1.5 var(--font);
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--red-tint);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: var(--r-focus);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+p,
+dl,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+/* 숫자 네 단계 40 / 28 / 18 / 14. 숫자는 Lexend 얇은 굵기 (DESIGN.md Typography) */
+.num {
+  font-family: var(--numeral);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1;
+}
+
+.n40 {
+  font-size: var(--n40);
+  font-weight: 300;
+}
+
+.n24 {
+  font-size: var(--n28);
+}
+
+.n17 {
+  font-size: var(--n18);
+}
+
+.n14 {
+  font-size: var(--n14);
+}
+
+/* 단위는 숫자 옆 작은 회색 글자, 자간 0 */
+.unit {
+  font-family: var(--font);
+  font-size: max(var(--fs-caption), 0.5em);
+  font-weight: 400;
+  color: var(--ink-3);
+  letter-spacing: 0;
+  margin-left: 0.1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+
+  button:active,
+  a:active,
+  summary:active,
+  label:active {
+    transform: none !important;
+  }
+}
+
+/* 홈 발주 카드 → 발주 탭 (S15P31A308-265, lib/viewTransition.ts): 카드 · 매출 카드 · 품목명 · 수량이 제자리로 이어진다.
+   빨간 매출 카드 바탕엔 글자가 없어 늘어나도 티가 안 나고, 발주 카드는 먼저 흐려져 발주 탭 흰 목록으로 바뀐다 */
+::view-transition-group(*) {
+  animation-duration: 800ms;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 420ms;
+}
+
+::view-transition-old(rec-card) {
+  animation-duration: 360ms;
+}
+
+::view-transition-old(sales-card),
+::view-transition-new(sales-card) {
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

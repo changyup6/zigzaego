@@ -1,0 +1,695 @@
+/* 시안 stock_v3.html 재료 탭. --tile-h · --sp-tight · --cat-head-h는 페이지 높이 계산과 같다. */
+
+/* 머리줄: 그림/표 전환 · 검색 */
+.seg {
+  display: inline-flex;
+  padding: var(--sp-tight);
+  border-radius: var(--r-pill);
+  background: var(--paper);
+}
+
+.seg button {
+  height: var(--btn-sm-h);
+  padding: 0 var(--sp-gutter);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  font-size: var(--fs-block);
+  font-weight: 600;
+  color: var(--ink-3);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.seg button[aria-pressed="true"] {
+  background: var(--dark);
+  color: var(--paper);
+}
+
+.find {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-gap);
+  width: min(var(--find-w), 100%);
+  height: var(--btn-h);
+  margin-left: auto;
+  padding: 0 var(--sp-gutter);
+  border-radius: var(--r-pill);
+  background: var(--paper);
+  transition: box-shadow 160ms ease;
+}
+
+.find:focus-within {
+  box-shadow: 0 0 0 2px var(--red);
+}
+
+.find svg {
+  flex: none;
+  width: var(--ic-rail);
+  height: var(--ic-rail);
+  fill: none;
+  stroke: var(--ink-3);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.find input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  font-size: var(--fs-title);
+  outline: none;
+}
+
+/* 그림 배치: 왼쪽 냉장고, 오른쪽 선반 · 창고 */
+.store {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--sp-block);
+  align-items: start;
+}
+
+.right {
+  display: grid;
+  gap: var(--sp-block);
+}
+
+.fxName {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-gap);
+  padding: 0 var(--sp-tight) var(--sp-inline);
+}
+
+.fxName h2 {
+  font-family: var(--hand);
+  font-size: var(--fs-hand);
+  font-weight: 400;
+  color: var(--ink-2);
+}
+
+.fxName :global(.num) {
+  font-size: var(--fs-body);
+  color: var(--ink-3);
+}
+
+.fxName > .pg {
+  margin-left: auto;
+}
+
+/* 그림: 글자 칸(.face) 둘레에 SVG 선. 위 · 오른쪽 여백 = 윗면 · 옆면 깊이 */
+.obj {
+  position: relative;
+  padding: var(--art-dy) var(--art-dx) 0 0;
+}
+
+.ln {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ln path {
+  fill: var(--paper);
+  stroke: var(--red-art);
+  stroke-width: var(--art-line);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ln .open {
+  fill: none;
+}
+
+.ln .thin {
+  stroke-width: var(--art-line-thin);
+}
+
+.ln .fill {
+  fill: var(--red-art);
+}
+
+.face {
+  position: relative;
+  z-index: 1;
+}
+
+/* 냉장고: 위 냉동 · 아래 냉장, 남는 높이는 냉장칸이 갖는다 */
+.fridge {
+  padding-bottom: var(--art-legs);
+}
+
+.fridge .face {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-grid) var(--fridge-pad-r) var(--sp-grid) var(--sp-row);
+}
+
+.cmp {
+  position: relative;
+  padding: var(--cmp-label) 0 var(--sp-inline);
+}
+
+.cmp + .cmp {
+  margin-top: var(--sp-card-y);
+}
+
+.cmp:last-child {
+  flex: 1;
+}
+
+.cl {
+  position: absolute;
+  top: var(--sp-tight);
+  left: var(--sp-control);
+  font-family: var(--hand);
+  font-size: var(--fs-hand-s);
+  color: var(--ink-2);
+}
+
+.cmpPg {
+  position: absolute;
+  top: 0;
+  /* 44px 누르는 범위도 보관 칸 안에 둔다. */
+  right: calc((var(--control-h) - var(--pg-btn)) / 2);
+}
+
+/* 선반: 맨 위 판 아래로 2줄 */
+.shelf {
+  padding-bottom: var(--shelf-foot);
+}
+
+.shelf .face {
+  padding: var(--sp-sheet) var(--sp-sheet) 0;
+}
+
+.plank {
+  padding: var(--sp-inline) var(--sp-tight) calc(var(--art-dy) + var(--sp-inline));
+}
+
+.plank + .plank {
+  margin-top: var(--sp-gutter);
+}
+
+.plank .rack {
+  min-height: var(--tile-h);
+}
+
+/* 카테고리 머리 줄이 있으면 판 · 창고 높이를 머리 한 줄씩 더 잡아 쪽마다 같게 */
+.store[data-cats] .plank .rack {
+  min-height: calc(var(--cat-head-h) + var(--sp-tight) + var(--tile-h));
+}
+
+.store[data-cats] .bay .rack {
+  min-height: calc(2 * (var(--cat-head-h) + var(--tile-h)) + 3 * var(--sp-tight));
+}
+
+/* 창고: 박공 지붕 아래, 반쯤 올린 셔터 안 */
+.shed .face {
+  margin-top: var(--art-roof);
+  padding: var(--sp-grid) var(--sp-gutter) var(--sp-gutter);
+}
+
+.bay {
+  position: relative;
+  padding: var(--bay-shutter) var(--sp-control) var(--sp-control);
+}
+
+.bay .rack {
+  min-height: calc(2 * var(--tile-h) + var(--sp-tight));
+}
+
+/* 그림 안 재료: 카드 없이 글자만 */
+.rack {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--sp-tight);
+  align-content: start;
+}
+
+.it {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  height: var(--tile-h);
+  padding: 0 var(--sp-control);
+  border: 0;
+  border-radius: var(--r-input);
+  background: none;
+  text-align: left;
+  user-select: none;
+  -webkit-touch-callout: none;
+  transition:
+    background-color 140ms ease,
+    transform 160ms var(--ease);
+}
+
+.it:active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .it:hover {
+    background: var(--red-tint);
+  }
+
+  .grab {
+    cursor: grab;
+  }
+}
+
+.it b {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: var(--fs-block);
+  font-weight: 600;
+  color: var(--ink-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 재료명 앞 카테고리 아이콘 */
+.it :global(.num) {
+  font-size: var(--fs-tile-num);
+  line-height: 1.2;
+}
+
+.it small {
+  margin-left: var(--sp-hair);
+  font-family: var(--font);
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.it.low :global(.num),
+.row.low .q {
+  color: var(--red);
+}
+
+.it.unk :global(.num) {
+  color: var(--ink-3);
+}
+
+/* 그림 안 카테고리 머리: 아이콘 · 이름 한 줄, 그 아래 그 카테고리 재료 */
+.ch {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: var(--sp-tight);
+  align-items: center;
+  height: var(--cat-head-h);
+  padding: 0 var(--sp-control);
+  font-family: var(--hand);
+  font-size: var(--fs-hand-s);
+  color: var(--ink-2);
+}
+
+.none {
+  padding: var(--sp-inline) var(--sp-control);
+  font-size: var(--fs-block);
+  color: var(--ink-3);
+}
+
+/* 쪽 넘김 ‹ 1/2 › */
+.pg {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-hair);
+  font-size: var(--fs-label);
+  color: var(--ink-3);
+}
+
+.pg button,
+.pn button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: none;
+  transition:
+    background-color 120ms ease,
+    transform 120ms var(--ease);
+}
+
+.pg button {
+  position: relative;
+  width: var(--pg-btn);
+  height: var(--pg-btn);
+}
+
+/* 그림 칸 머리 줄 높이는 그대로, 누르는 범위만 44px (S15P31A308-289) */
+.pg button::before {
+  content: "";
+  position: absolute;
+  inset: calc((var(--pg-btn) - var(--control-h)) / 2);
+}
+
+.pg button:active,
+.pn button:active {
+  transform: scale(0.9);
+}
+
+.pg button:disabled,
+.pn button:disabled {
+  opacity: 0.3;
+}
+
+.pg svg,
+.pn svg {
+  width: var(--ic-row);
+  height: var(--ic-row);
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pg :global(.num) {
+  min-width: var(--pg-num);
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pg button:hover:not(:disabled) {
+    background: var(--red-tint);
+  }
+
+  .pn button:hover:not(:disabled):not([aria-current]) {
+    background: var(--paper);
+  }
+}
+
+/* 끌어서 옮기기 */
+.cmp,
+.bay,
+.shelf .face {
+  border-radius: var(--r-input);
+  transition:
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.over {
+  background: var(--red-tint);
+  box-shadow: 0 0 0 2px var(--red);
+}
+
+.lift {
+  opacity: 0.25;
+}
+
+.ghost {
+  position: fixed;
+  z-index: 60;
+  margin: 0;
+  background: var(--paper);
+  box-shadow:
+    0 0 0 3px var(--red),
+    0 16px 30px -10px var(--scrim);
+  pointer-events: none;
+  transform: rotate(-3deg) scale(1.05);
+  transition: none;
+}
+
+.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* 표 */
+.tbl {
+  padding: var(--sp-inline) var(--sp-gap);
+  overflow-x: auto;
+  border-radius: var(--r-widget);
+  background: var(--paper);
+}
+
+.tbl table {
+  width: 100%;
+  min-width: var(--tbl-min);
+  border-collapse: collapse;
+}
+
+.tbl th {
+  padding: var(--sp-grid) var(--sp-row);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  color: var(--ink-3);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tbl td {
+  padding: var(--sp-row);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-body);
+  white-space: nowrap;
+}
+
+.tbl td b {
+  font-weight: 600;
+}
+
+.tbl td small {
+  font-family: var(--font);
+  font-size: var(--fs-caption);
+  color: var(--ink-3);
+}
+
+.tbl .r {
+  text-align: right;
+}
+
+.row {
+  cursor: pointer;
+}
+
+/* 카테고리 묶음 머리: 아이콘 · 이름 · 개수 */
+.grp th {
+  padding: var(--sp-gutter) var(--sp-row) var(--sp-inline);
+}
+
+.grp b {
+  margin: 0 var(--sp-gap) 0 var(--sp-inline);
+  font-family: var(--hand);
+  font-size: var(--fs-hand-s);
+  font-weight: 400;
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+
+.grp :global(.num) {
+  font-size: var(--fs-body);
+  color: var(--ink-3);
+  vertical-align: middle;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover td {
+    background: var(--rule-soft);
+  }
+}
+
+.loc {
+  display: inline-flex;
+  align-items: center;
+  height: var(--loc-h);
+  padding: 0 var(--sp-gap);
+  border: 1.5px solid var(--red);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--red);
+}
+
+/* 번호 쪽 넘김 ‹ 1 2 3 4 5 › */
+.pn {
+  display: flex;
+  gap: var(--sp-tight);
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-row) 0;
+}
+
+.pn button {
+  min-width: var(--pn-btn);
+  height: var(--pn-btn);
+  padding: 0 var(--sp-inline);
+  font-size: var(--fs-body);
+  color: var(--ink-2);
+}
+
+.pn button[aria-current="page"] {
+  background: var(--red);
+  color: var(--on-red);
+}
+
+@media (max-width: 760px) {
+  .find {
+    width: 100%;
+  }
+
+  .store {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .obj {
+    padding: var(--art-dy-m) var(--art-dx-m) 0 0;
+  }
+
+  .plank {
+    padding-bottom: calc(var(--art-dy-m) + var(--sp-inline));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .it,
+  .cmp,
+  .bay {
+    transition: none;
+  }
+}
+
+/* 재료 전용 viewport. 그림을 줄이지 않고 남는 재료를 쪽으로 보낸다. */
+@media (min-width: 761px) {
+  .store {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1.1fr) repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: var(--sp-gutter);
+  }
+  .right {
+    display: contents;
+  }
+  .fixture {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+  }
+  .fxName {
+    flex: none;
+    align-items: center;
+    min-height: 36px;
+  }
+  .obj {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+  .face {
+    flex: 1;
+    min-height: 0;
+  }
+  .fridge .face {
+    padding-right: var(--sp-card-y);
+  }
+  /* 냉장고의 10px 다리 끝과 창고의 보이는 바닥선을 맞춘다. */
+  .shed {
+    padding-bottom: calc(var(--art-legs) - 10px);
+  }
+  .cmp {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+  .cmp + .cmp {
+    margin-top: var(--sp-grid);
+  }
+  .shelf .face {
+    display: flex;
+    flex-direction: column;
+    padding-inline: var(--sp-grid);
+  }
+  .plank {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+  .bay {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+  .rack,
+  .store[data-cats] .plank .rack,
+  .store[data-cats] .bay .rack,
+  .plank .rack,
+  .bay .rack {
+    flex: 1;
+    min-height: 0;
+  }
+  .store[data-layout="stacked"] {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .store[data-layout="stacked"] .right {
+    display: grid;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-gutter);
+    min-height: 0;
+  }
+  .store[data-loading] {
+    --stock-loading-h: 100%;
+    grid-template-columns: 5fr 7fr;
+  }
+  .store[data-loading] .right {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    min-height: 0;
+  }
+  .tbl {
+    flex: 1;
+    min-height: 0;
+    overflow: visible;
+  }
+  .tbl table {
+    min-width: 0;
+    table-layout: fixed;
+  }
+  .tbl td,
+  .tbl th {
+    padding-inline: var(--sp-inline);
+  }
+  .tbl th:first-child {
+    width: 20%;
+  }
+  .tbl th:nth-child(2) {
+    width: 8%;
+  }
+  .tbl th:nth-child(3) {
+    width: 11%;
+  }
+  .tbl th:nth-child(4),
+  .tbl th:nth-child(5) {
+    width: 10%;
+  }
+  .tbl th:nth-child(6) {
+    width: 16%;
+  }
+  .tbl td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .loc {
+    padding-inline: var(--sp-tight);
+  }
+  .pn {
+    flex: none;
+    padding-block: var(--sp-tight);
+  }
+}

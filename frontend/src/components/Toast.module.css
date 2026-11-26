@@ -1,0 +1,35 @@
+/* 시안 .toast: dark 12px, 그림자는 토스트 · 폰 탭 막대만 */
+.toast {
+  position: fixed;
+  left: var(--sp-gutter);
+  right: var(--sp-gutter);
+  bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+  z-index: 30;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: var(--sp-grid) var(--sp-gutter);
+  border-radius: var(--r-panel);
+  background: var(--dark);
+  color: var(--paper);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  text-align: center;
+  box-shadow: var(--shadow-toast);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 200ms var(--ease),
+    transform 200ms var(--ease);
+}
+
+.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 761px) {
+  .toast {
+    bottom: 100px;
+  }
+}
